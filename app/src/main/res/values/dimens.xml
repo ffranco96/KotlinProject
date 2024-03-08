@@ -1,1 +1,4 @@
-<resources></resources>
+<resources>
+    <dimen name="title_size">34sp</dimen>
+    <dimen name="amount_size">45sp</dimen>
+</resources>

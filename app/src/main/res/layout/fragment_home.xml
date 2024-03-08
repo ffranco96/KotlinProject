@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HomeFragment" >
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="343dp"
+        android:layout_height="520dp"
+        android:layout_marginBottom="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.441"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewFirstCurrency2"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/viewFirstCurrency"
+        android:layout_width="345dp"
+        android:layout_height="69dp"
+        android:layout_marginTop="32dp"
+        android:text="U$D 6000,0"
+        android:textSize="@dimen/amount_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/viewFirstCurrency2"
+        android:layout_width="345dp"
+        android:layout_height="69dp"
+        android:layout_marginTop="16dp"
+        android:text="ARS 6.000.000,0"
+        android:textSize="@dimen/amount_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewFirstCurrency" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,12 +13,12 @@
         android:layout_marginStart="124dp"
         android:layout_marginTop="228dp"
         android:fontFamily="@font/roboto_medium"
-        android:shadowColor="#5164CC"
         android:text="Acceder"
         android:textColorHighlight="#BCC2E6"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:backgroundTint="@color/dark_blue"
         app:rippleColor="#00FFFFFF" />
 
     <TextView
@@ -30,7 +30,7 @@
         android:fontFamily="@font/roboto_medium"
         android:text="Iniciar sesion"
         android:textAlignment="center"
-        android:textSize="34sp"
+        android:textSize="@dimen/title_size"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
