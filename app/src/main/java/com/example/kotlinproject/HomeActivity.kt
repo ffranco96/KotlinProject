@@ -11,4 +11,19 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
     }
+
+    override fun onRestart() {
+        Log.d("LifeCycle", "onRestart")
+        super.onRestart()
+    }
+
+    override fun onPause() {
+        Log.d("LifeCycle", "onPause")
+        super.onPause()
+    }
+
+    override fun onStop() {
+        Log.d("LifeCycle", "onStop")
+        super.onStop()
+    }
 }
