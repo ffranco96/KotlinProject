@@ -16,13 +16,13 @@
         android:theme="@style/Theme.KotlinProject"
         tools:targetApi="31">
         <activity
-            android:name=".AddRegActivity"
+            android:name=".activities.AddRegActivity"
             android:exported="false" />
         <activity
-            android:name=".HomeActivity"
+            android:name=".activities.HomeActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".activities.LoginActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.KotlinProject">

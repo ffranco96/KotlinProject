@@ -1,8 +1,9 @@
-package com.example.kotlinproject
+package com.example.kotlinproject.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import com.example.kotlinproject.R
 
 class AddRegActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

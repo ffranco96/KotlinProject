@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddRegActivity">
+    tools:context=".activities.AddRegActivity">
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainerView2"
-        android:name="com.example.kotlinproject.AddRegFragmentAmount"
+        android:name="com.example.kotlinproject.fragments.AddRegFragmentAmount"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"

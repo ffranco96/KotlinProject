@@ -1,4 +1,4 @@
-package com.example.kotlinproject
+package com.example.kotlinproject.fragments
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import com.example.kotlinproject.R
+import com.example.kotlinproject.activities.AddRegActivity
 
 class HomeStartFragment : Fragment() {
     override fun onCreateView(

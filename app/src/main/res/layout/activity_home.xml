@@ -5,11 +5,11 @@
     android:id="@+id/ConstraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomeActivity">
+    tools:context=".activities.HomeActivity">
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainerView"
-        android:name="com.example.kotlinproject.HomeStartFragment"
+        android:name="com.example.kotlinproject.fragments.HomeStartFragment"
         android:layout_width="410dp"
         android:layout_height="733dp"
         app:layout_constraintBottom_toBottomOf="parent"
