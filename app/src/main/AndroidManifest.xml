@@ -16,6 +16,9 @@
         android:theme="@style/Theme.KotlinProject"
         tools:targetApi="31">
         <activity
+            android:name=".AddRegActivity"
+            android:exported="false" />
+        <activity
             android:name=".HomeActivity"
             android:exported="false" />
         <activity
