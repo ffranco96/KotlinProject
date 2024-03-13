@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ImageButton
 import android.widget.Spinner
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.example.kotlinproject.R
 
 class AddRegFragmentAmount : Fragment() {
@@ -28,9 +30,10 @@ class AddRegFragmentAmount : Fragment() {
         // Buttons
         val nextButton = rootView.findViewById<ImageButton>(R.id.nextButton)
         val cancelButton = rootView.findViewById<ImageButton>(R.id.cancelButton)
-        nextButton.setOnClickListener {
-            requireActivity()?.finish()
-        }
+        nextButton.setOnClickListener(
+            Navigation.createNavigateOnClickListener(R.id.action_addRegFragmentAmount_to_addRegFragmentDetail)
+            //findNavController().navigate(R.id.action_addRegFragmentAmount_to_addRegFragmentDetail)
+        )
         cancelButton.setOnClickListener {
             requireActivity()?.finish()
         }

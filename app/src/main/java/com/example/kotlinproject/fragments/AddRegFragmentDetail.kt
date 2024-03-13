@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import androidx.navigation.fragment.findNavController
 import com.example.kotlinproject.R
 
 class AddRegFragmentDetail : Fragment() {
@@ -24,7 +25,7 @@ class AddRegFragmentDetail : Fragment() {
             requireActivity().finish()
         }
         backButton.setOnClickListener {
-            requireActivity().finish()
+            findNavController().popBackStack()
         }
         return rootView
     }

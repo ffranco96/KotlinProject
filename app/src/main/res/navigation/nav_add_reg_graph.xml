@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_add_reg_graph"
+    app:startDestination="@id/addRegFragmentAmount">
+
+    <fragment
+        android:id="@+id/addRegFragmentAmount"
+        android:name="com.example.kotlinproject.fragments.AddRegFragmentAmount"
+        android:label="fragment_add_reg_amount"
+        tools:layout="@layout/fragment_add_reg_amount" >
+        <action
+            android:id="@+id/action_addRegFragmentAmount_to_addRegFragmentDetail"
+            app:destination="@id/addRegFragmentDetail" />
+    </fragment>
+    <fragment
+        android:id="@+id/addRegFragmentDetail"
+        android:name="com.example.kotlinproject.fragments.AddRegFragmentDetail"
+        android:label="fragment_add_reg_detail"
+        tools:layout="@layout/fragment_add_reg_detail" />
+</navigation>
