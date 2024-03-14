@@ -1,16 +1,19 @@
 package com.example.kotlinproject.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Spinner
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.example.kotlinproject.R
+import com.example.kotlinproject.activities.AddRegActivity
 
 class AddRegFragmentAmount : Fragment() {
     override fun onCreateView(
@@ -30,10 +33,18 @@ class AddRegFragmentAmount : Fragment() {
         // Buttons
         val nextButton = rootView.findViewById<ImageButton>(R.id.nextButton)
         val cancelButton = rootView.findViewById<ImageButton>(R.id.cancelButton)
-        nextButton.setOnClickListener(
-            Navigation.createNavigateOnClickListener(R.id.action_addRegFragmentAmount_to_addRegFragmentDetail)
-            //findNavController().navigate(R.id.action_addRegFragmentAmount_to_addRegFragmentDetail)
-        )
+        val amountEditText = rootView.findViewById<EditText>(R.id.amountEditText)
+
+        //nextButton.setOnClickListener( @note Another way to move nav graph
+        //    Navigation.createNavigateOnClickListener(R.id.action_addRegFragmentAmount_to_addRegFragmentDetail)
+        //)
+
+        nextButton.setOnClickListener{//@todo check
+            findNavController().navigate(R.id.action_addRegFragmentAmount_to_addRegFragmentDetail)
+            (activity as AddRegActivity).amount = amountEditText.text.toString()
+            Log.d("LifeCycle", "Presionado nextbutton")
+        }
+
         cancelButton.setOnClickListener {
             requireActivity()?.finish()
         }

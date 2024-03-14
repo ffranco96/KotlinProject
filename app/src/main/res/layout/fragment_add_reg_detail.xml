@@ -58,21 +58,21 @@
             android:textAlignment="textStart" />
 
         <TextView
-            android:id="@+id/labelDate"
+            android:id="@+id/labelCategory"
             android:layout_width="match_parent"
             android:layout_height="41dp"
             android:fontFamily="@font/roboto_medium"
-            android:text="Fecha"
+            android:text="Category"
             android:textSize="20sp" />
 
         <EditText
-            android:id="@+id/dateEditText"
+            android:id="@+id/categoryEditText"
             android:layout_width="match_parent"
             android:layout_height="84dp"
             android:ems="10"
             android:fontFamily="sans-serif-medium"
             android:inputType="text"
-            android:text="Agrega fecha"
+            android:text="Agrega categoria"
             android:textAlignment="textStart" />
 
     </LinearLayout>

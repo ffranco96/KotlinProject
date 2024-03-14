@@ -6,6 +6,8 @@ import android.util.Log
 import com.example.kotlinproject.R
 
 class AddRegActivity : AppCompatActivity() {
+    var amount: String = "0,0" //@todo must be Double
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_reg)
