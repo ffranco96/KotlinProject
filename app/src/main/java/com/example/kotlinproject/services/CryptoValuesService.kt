@@ -12,9 +12,10 @@ import com.android.volley.toolbox.Volley
 
 class CryptoValuesService : IntentService("CryptoValuesService") {
     companion object {
-        const val TAG ="CryptoValuesService"
-        const val ACTION_CRYPTO_VALUES = "com.example.kotlinproject.obtained_crypto_values"
-        const val EXTRA_CRYPTO_VALUES = "crypto_values"
+        //const val TAG ="CryptoValuesService"
+        //const val ACTION_CRYPTO_VALUES = "com.example.kotlinproject.obtained_crypto_values"
+        //const val EXTRA_CRYPTO_VALUES = "crypto_values"
+        const val TAG = "WeatherService"
         const val ACTION_TEMP = "com.example.kotlinproject.temp_obtenida"
         const val EXTRA_TEMP = "temp"
     }
@@ -30,12 +31,11 @@ class CryptoValuesService : IntentService("CryptoValuesService") {
             Request.Method.GET, url, null,
             Response.Listener
             {
-                val temperatura = it.getJSONObject("currentConditions").getDouble("temp") //@todo delete
-                Log.d("Temperatura:", "aquí")
-                Log.d("Temperatura: ", temperatura.toString()) //@todo no muestra nada
-                //val broadcastIntent = Intent(ACTION_TEMP)
-                //broadcastIntent.putExtra(EXTRA_TEMP, temperatura)
-                //sendBroadcast(broadcastIntent)
+                val temperatura = it.getJSONObject("currentConditions").getDouble("temp") //@todo replace
+                Log.d("Temperatura: ", temperatura.toString())
+                val broadcastIntent = Intent(ACTION_TEMP)
+                broadcastIntent.putExtra(EXTRA_TEMP, temperatura)
+                sendBroadcast(broadcastIntent)
             },
             Response.ErrorListener{
             })
