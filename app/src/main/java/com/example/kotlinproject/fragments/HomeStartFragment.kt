@@ -21,20 +21,21 @@ class HomeStartFragment : Fragment() {
 
     val receiver = object: BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
-            val btcValue = intent?.getDoubleExtra(CryptoValuesService.EXTRA_TEMP, -200.0) ?: -300.0 // @todo modify and replace for btc
-            Log.d("Temperatura", "Valor recibido $btcValue")
+            Log.d("BTC_Value","Onreceive started")
+            val btcValue = intent?.getDoubleExtra(CryptoValuesService.EXTRA_CRYPTO_VALUES, -200.0) ?: -300.0 // @todo modify and replace for btc
+            Log.d("BTC_Value", "Valor recibido $btcValue")
             //Toast.makeText(context, "Llego valor btc: $btcValue",Toast.LENGTH_LONG).show()
             if (btcValue < 0) {
                 textBtcValue?.text = "0.00"
-                Log.d("LifeCycle", "Error")
+                Log.d("BTC_Value", "Error")
             } else {
-                textBtcValue?.text = btcValue.toString()
-                Log.d("LifeCycle", btcValue.toString())
+                textBtcValue?.text = String.format("%.2f",btcValue)
+                Log.d("BTC_Value", btcValue.toString())
             }
         }
     }
     override fun onResume() {
-        val intentFilter = IntentFilter(CryptoValuesService.ACTION_TEMP)
+        val intentFilter = IntentFilter(CryptoValuesService.ACTION_CRYPTO_VALUES)
         activity?.registerReceiver(receiver, intentFilter)
         super.onResume()
     }
@@ -60,13 +61,11 @@ class HomeStartFragment : Fragment() {
 
         val buttonUpdValues = rootView.findViewById<Button>(R.id.buttonUpdValues)
         buttonUpdValues.setOnClickListener {
-            val ciudad = "buenosaires"
             textBtcValue?.text = "\uD83D\uDD52"
-            Log.d("LyfeCycle","Paso por aca")
+            Log.d("BTC_Value","Paso por aca")
 
             // Comienza un servicio
             val intent = Intent(activity, CryptoValuesService::class.java)
-            intent.putExtra("ciudad", ciudad)
             activity?.startService(intent)
         }
 
