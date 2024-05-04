@@ -12,13 +12,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import com.example.kotlinproject.R
 import com.example.kotlinproject.activities.AddRegActivity
 import com.example.kotlinproject.services.CryptoValuesService
 
 class HomeStartFragment : Fragment() {
-    val textBtcValue: TextView? = null
+    var textBtcValue: TextView? = null
 
     val receiver = object: BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
@@ -51,7 +50,7 @@ class HomeStartFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val rootView = inflater.inflate(R.layout.fragment_home_start, container, false)
-        textBtcValue?.text = rootView.findViewById(R.id.textBtcValue)
+        textBtcValue = rootView.findViewById(R.id.textBtcValue)
 
         // @todo Recycler mas adelante
         val buttonAddReg = rootView.findViewById<Button>(R.id.addRegButton)
@@ -62,7 +61,8 @@ class HomeStartFragment : Fragment() {
         val buttonUpdValues = rootView.findViewById<Button>(R.id.buttonUpdValues)
         buttonUpdValues.setOnClickListener {
             val ciudad = "buenosaires"
-            textBtcValue?.text = "..."
+            textBtcValue?.text = "\uD83D\uDD52"
+            Log.d("LyfeCycle","Paso por aca")
 
             // Comienza un servicio
             val intent = Intent(activity, CryptoValuesService::class.java)
