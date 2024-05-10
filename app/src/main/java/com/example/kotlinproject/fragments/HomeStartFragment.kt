@@ -12,13 +12,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.kotlinproject.R
 import com.example.kotlinproject.activities.AddRegActivity
+import com.example.kotlinproject.data.RecordsProvider
 import com.example.kotlinproject.services.CryptoValuesService
 
 class HomeStartFragment : Fragment() {
     var textBtcValue: TextView? = null
-
+    //@todo en esta screen se puede agregar un selector de moneda que, de paso, active un intent para mostrar su precio
     val receiver = object: BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             Log.d("BTC_Value","Onreceive started")
@@ -53,7 +56,6 @@ class HomeStartFragment : Fragment() {
         val rootView = inflater.inflate(R.layout.fragment_home_start, container, false)
         textBtcValue = rootView.findViewById(R.id.textBtcValue)
 
-        // @todo Recycler mas adelante
         val buttonAddReg = rootView.findViewById<Button>(R.id.addRegButton)
         buttonAddReg.setOnClickListener {
             goToAddReg()
@@ -67,6 +69,19 @@ class HomeStartFragment : Fragment() {
             // Comienza un servicio
             val intent = Intent(activity, CryptoValuesService::class.java)
             activity?.startService(intent)
+        }
+
+        // Configurar RecyclerView
+        val recyclerRegs = rootView.findViewById<RecyclerView>(R.id.recyclerRegs)
+        recyclerRegs.layoutManager = LinearLayoutManager(
+            activity, LinearLayoutManager.VERTICAL,
+            false
+        )
+
+        //recyclerRegs.adapter = RegsAdapter();
+
+        RecordsProvider.getProvider().listAll().forEach {
+            Log.d("Registro",it.toString())
         }
 
         return rootView

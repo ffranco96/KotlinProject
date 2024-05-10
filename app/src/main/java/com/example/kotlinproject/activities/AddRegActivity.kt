@@ -6,7 +6,7 @@ import android.util.Log
 import com.example.kotlinproject.R
 
 class AddRegActivity : AppCompatActivity() {
-    var amount: String = "0,0" //@todo must be Double
+    var amount: Double = 0.00
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

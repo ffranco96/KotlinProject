@@ -20,6 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerRegs"
         android:layout_width="339dp"
         android:layout_height="418dp"
         android:layout_marginBottom="4dp"

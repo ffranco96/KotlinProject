@@ -31,7 +31,7 @@ class AddRegFragmentDetail : Fragment() {
 
         confirmButton.setOnClickListener {
             val auxAmount = (activity as AddRegActivity).amount
-            val newRecord = Record(auxAmount, descriptionEditText.text.toString(), categoryEditText.text.toString()) //@todo quitar hardcodeo de monto. Se debe sacar del otro fragment
+            val newRecord = Record(auxAmount, descriptionEditText.text.toString(), "",categoryEditText.text.toString(), "2024-05-25",  ) //@todo quitar hardcodeo de monto. Se debe sacar del otro fragment
             RecordsProvider.getProvider().addRec(newRecord)
             Log.d("LifeCycle", newRecord.toString())
             requireActivity().finish()

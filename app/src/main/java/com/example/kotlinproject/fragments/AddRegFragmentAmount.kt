@@ -41,7 +41,7 @@ class AddRegFragmentAmount : Fragment() {
 
         nextButton.setOnClickListener{//@todo check
             findNavController().navigate(R.id.action_addRegFragmentAmount_to_addRegFragmentDetail)
-            (activity as AddRegActivity).amount = amountEditText.text.toString()
+            (activity as AddRegActivity).amount = amountEditText.text.toString().toDouble()
             Log.d("LifeCycle", "Presionado nextbutton")
         }
 

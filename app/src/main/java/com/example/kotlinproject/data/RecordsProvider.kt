@@ -2,7 +2,7 @@ package com.example.kotlinproject.data
 
 class RecordsProvider {
     companion object {
-        private val instance = RecordsProvider() // used to be available only from inside
+        private val instance = RecordsProvider() // used to be available only from inside. Singleton.
         fun getProvider(): RecordsProvider {
             return instance
         }
@@ -15,11 +15,11 @@ class RecordsProvider {
     }
 
     private val records = mutableListOf(
-        Record("80.000,15","Entrada La vela puerca", "Recitales y jodas"),
-        Record("110.000,65","Entrada Divididos", "Recitales y jodas")
+        Record(80000.15,"Entrada La vela puerca", "", "Recitales y jodas", "2024-05-25"),
+        Record(110000.65,"Entrada Divididos", "","Recitales y jodas", "2024-03-20")
     )
 
-    // Cada vez que se agregan las notas, se ejecutan los listeners tambien
+    // Every time notes are added, also listeners are executed
     fun addRec(record: Record){
         records.add(record)
         listeners.forEach{
