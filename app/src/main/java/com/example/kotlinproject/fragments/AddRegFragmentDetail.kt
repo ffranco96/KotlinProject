@@ -26,15 +26,15 @@ class AddRegFragmentDetail : Fragment() {
         // Buttons
         val confirmButton = rootView.findViewById<ImageButton>(R.id.confirmButton)
         val backButton = rootView.findViewById<ImageButton>(R.id.backButton)
-        //val titleEditText = rootView.findViewById<EditText>(R.id.titleEditText)
+        val titleEditText = rootView.findViewById<EditText>(R.id.titleEditText)
         val descriptionEditText = rootView.findViewById<EditText>(R.id.descriptionEditText)
         val categoryEditText = rootView.findViewById<EditText>(R.id.categoryEditText)
 
         val activityContext = (activity as AddRegActivity)
         confirmButton.setOnClickListener {
-            //activityContext.newRecord.title = titleEditText.text.toString()
+            activityContext.newRecord.title = titleEditText.text.toString()
             activityContext.newRecord.description = descriptionEditText.text.toString()
-            activityContext.newRecord.date = "2024-05-25" //@todo quitar hardcodeo de monto
+            activityContext.newRecord.date = "2024-05-25" //@todo quitar hardcodeo
             activityContext.newRecord.category = categoryEditText.text.toString()
 
             RecordsProvider.getProvider().addRec(activityContext.newRecord)
