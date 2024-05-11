@@ -14,7 +14,13 @@ class RecordsAdapter: RecyclerView.Adapter<RecordsAdapter.RecordViewHolder>() {
     {
         fun bind(record: Rec){
             val recDescription = itemView.findViewById<TextView>(R.id.description)
+            val recAmount = itemView.findViewById<TextView>(R.id.amount)
+            val recDate = itemView.findViewById<TextView>(R.id.date)
+            val recTitle = itemView.findViewById<TextView>(R.id.regTitle)
             recDescription.text = record.description
+            recAmount.text = record.amount.toString()
+            recDate.text = record.date
+            recTitle.text = record.title
         }
     }
 
