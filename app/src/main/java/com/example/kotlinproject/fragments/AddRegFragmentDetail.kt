@@ -11,8 +11,8 @@ import android.widget.ImageButton
 import androidx.navigation.fragment.findNavController
 import com.example.kotlinproject.R
 import com.example.kotlinproject.activities.AddRegActivity
-import com.example.kotlinproject.data.Record
-import com.example.kotlinproject.data.RecordsProvider
+import com.example.kotlinproject.model.Rec
+import com.example.kotlinproject.model.RecordsProvider
 
 class AddRegFragmentDetail : Fragment() {
 
@@ -31,7 +31,7 @@ class AddRegFragmentDetail : Fragment() {
 
         confirmButton.setOnClickListener {
             val auxAmount = (activity as AddRegActivity).amount
-            val newRecord = Record(auxAmount, descriptionEditText.text.toString(), "",categoryEditText.text.toString(), "2024-05-25",  ) //@todo quitar hardcodeo de monto. Se debe sacar del otro fragment
+            val newRecord = Rec(auxAmount, descriptionEditText.text.toString(), "",categoryEditText.text.toString(), "2024-05-25",  ) //@todo quitar hardcodeo de monto. Se debe sacar del otro fragment
             RecordsProvider.getProvider().addRec(newRecord)
             Log.d("LifeCycle", newRecord.toString())
             requireActivity().finish()

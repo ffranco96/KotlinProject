@@ -16,7 +16,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kotlinproject.R
 import com.example.kotlinproject.activities.AddRegActivity
-import com.example.kotlinproject.data.RecordsProvider
+import com.example.kotlinproject.adapters.RecordsAdapter
+import com.example.kotlinproject.model.RecordsProvider
 import com.example.kotlinproject.services.CryptoValuesService
 
 class HomeStartFragment : Fragment() {
@@ -77,11 +78,15 @@ class HomeStartFragment : Fragment() {
             activity, LinearLayoutManager.VERTICAL,
             false
         )
-
-        //recyclerRegs.adapter = RegsAdapter();
+        val adapter = RecordsAdapter()
+        recyclerRegs.adapter = adapter
 
         RecordsProvider.getProvider().listAll().forEach {
             Log.d("Registro",it.toString())
+        }
+
+        RecordsProvider.getProvider().registerListener {
+            adapter.notifyDataSetChanged()
         }
 
         return rootView
