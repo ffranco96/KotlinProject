@@ -4,9 +4,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import com.example.kotlinproject.R
+import com.example.kotlinproject.model.Rec
 
 class AddRegActivity : AppCompatActivity() {
-    var amount: Double = 0.00
+    val newRecord = Rec()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

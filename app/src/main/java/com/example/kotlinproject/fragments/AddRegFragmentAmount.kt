@@ -24,7 +24,7 @@ class AddRegFragmentAmount : Fragment() {
         val rootView = inflater.inflate(R.layout.fragment_add_reg_amount, container, false)
 
         // Spinner
-        val currencies = listOf("ARS", "USD", "USDT", "BTC")
+        val currencies = listOf("ARS", "USD", "USDT", "BTC")  //@todo como accedo a los valores del spinner para guardarlo
         val currencySpinner = rootView.findViewById<Spinner>(R.id.currencySpinner)
         val spinnerAdapter = ArrayAdapter(requireActivity(), android.R.layout.simple_spinner_item,currencies)
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line)
@@ -38,15 +38,16 @@ class AddRegFragmentAmount : Fragment() {
         //nextButton.setOnClickListener( @note Another way to move nav graph
         //    Navigation.createNavigateOnClickListener(R.id.action_addRegFragmentAmount_to_addRegFragmentDetail)
         //)
-
+        val activityContext = (activity as AddRegActivity)
         nextButton.setOnClickListener{//@todo check
             findNavController().navigate(R.id.action_addRegFragmentAmount_to_addRegFragmentDetail)
-            (activity as AddRegActivity).amount = amountEditText.text.toString().toDouble()
+            activityContext.newRecord.amount = amountEditText.text.toString().toDouble()
+            activityContext.newRecord.currency = currencySpinner.selectedItem.toString()
             Log.d("LifeCycle", "Presionado nextbutton")
         }
 
         cancelButton.setOnClickListener {
-            requireActivity()?.finish()
+            requireActivity().finish()
         }
 
         return rootView

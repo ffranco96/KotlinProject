@@ -29,11 +29,14 @@ class AddRegFragmentDetail : Fragment() {
         val descriptionEditText = rootView.findViewById<EditText>(R.id.descriptionEditText)
         val categoryEditText = rootView.findViewById<EditText>(R.id.categoryEditText)
 
+        val activityContext = (activity as AddRegActivity)
         confirmButton.setOnClickListener {
-            val auxAmount = (activity as AddRegActivity).amount
-            val newRecord = Rec(auxAmount, descriptionEditText.text.toString(), "",categoryEditText.text.toString(), "2024-05-25",  ) //@todo quitar hardcodeo de monto. Se debe sacar del otro fragment
-            RecordsProvider.getProvider().addRec(newRecord)
-            Log.d("LifeCycle", newRecord.toString())
+            activityContext.newRecord.description = descriptionEditText.text.toString()
+            activityContext.newRecord.date = "2024-05-25" //@todo quitar hardcodeo de monto
+            activityContext.newRecord.category = categoryEditText.text.toString()
+
+            RecordsProvider.getProvider().addRec(activityContext.newRecord)
+            Log.d("Data", activityContext.newRecord.toString())
             requireActivity().finish()
         }
         backButton.setOnClickListener {

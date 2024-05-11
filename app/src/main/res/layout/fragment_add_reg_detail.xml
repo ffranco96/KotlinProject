@@ -44,7 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:fontFamily="@font/roboto_medium"
-            android:text="Descripcion"
+            android:text="Descripción"
             android:textSize="20sp" />
 
         <EditText
@@ -53,8 +53,8 @@
             android:layout_height="247dp"
             android:ems="10"
             android:fontFamily="sans-serif-medium"
+            android:hint="Agrega una descripción"
             android:inputType="text"
-            android:text="Agrega una descripcion"
             android:textAlignment="textStart" />
 
         <TextView
@@ -62,7 +62,7 @@
             android:layout_width="match_parent"
             android:layout_height="41dp"
             android:fontFamily="@font/roboto_medium"
-            android:text="Category"
+            android:text="Categoría"
             android:textSize="20sp" />
 
         <EditText
@@ -71,8 +71,8 @@
             android:layout_height="84dp"
             android:ems="10"
             android:fontFamily="sans-serif-medium"
+            android:hint="Seleccione categoria"
             android:inputType="text"
-            android:text="Agrega categoria"
             android:textAlignment="textStart" />
 
     </LinearLayout>
