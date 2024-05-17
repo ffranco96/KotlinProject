@@ -89,6 +89,7 @@
             android:layout_width="111dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:backgroundTint="@color/dark_blue"
             android:text="↺"
             android:textAlignment="center"
             android:textSize="34sp" />
