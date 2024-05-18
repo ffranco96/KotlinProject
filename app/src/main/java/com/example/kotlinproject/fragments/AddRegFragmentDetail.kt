@@ -11,10 +11,13 @@ import android.widget.ImageButton
 import androidx.navigation.fragment.findNavController
 import com.example.kotlinproject.R
 import com.example.kotlinproject.activities.AddRegActivity
-import com.example.kotlinproject.model.Rec
 import com.example.kotlinproject.model.RecordsProvider
 
 class AddRegFragmentDetail : Fragment() {
+    enum class categoryIds {
+        EVENTS_AND_CONCERTS,
+        OTHER, //@todo agregar resto de categorias almenos por ahora. Agregarle un id String a la categoria. Agregar un spinner
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,13 +34,19 @@ class AddRegFragmentDetail : Fragment() {
         val categoryEditText = rootView.findViewById<EditText>(R.id.categoryEditText)
 
         val activityContext = (activity as AddRegActivity)
+
+        val provider = RecordsProvider.getProvider()
+
         confirmButton.setOnClickListener {
             activityContext.newRecord.title = titleEditText.text.toString()
             activityContext.newRecord.description = descriptionEditText.text.toString()
             activityContext.newRecord.date = "2024-05-25" //@todo quitar hardcodeo
-            activityContext.newRecord.category = categoryEditText.text.toString()
+            when(categoryEditText.text.toString()){
+                "Recitales y eventos"-> activityContext.newRecord.category = provider.getcategoriesList()[5]
+                else -> activityContext.newRecord.category = provider.getcategoriesList()[1] //@todo agregar resto de categorias almenos por ahora
+            }
 
-            RecordsProvider.getProvider().addRec(activityContext.newRecord)
+            provider.addRecord(activityContext.newRecord)
             Log.d("Data", activityContext.newRecord.toString())
             requireActivity().finish()
         }

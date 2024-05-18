@@ -57,20 +57,6 @@ class HomeStartFragment : Fragment() {
         // Inflate the layout for this fragment
         val rootView = inflater.inflate(R.layout.fragment_home_start, container, false)
         textBtcValue = rootView.findViewById(R.id.textBtcValue)
-        val mutableList = mutableListOf(
-            Category("Comida y alimentos", R.drawable.ic_other_generic, R.color.sad_grey, ""),
-            Category("Restaurant y comida rapida", R.drawable.ic_category_concerts_5, R.color.sad_grey, ""),
-            Category("Ropa", R.drawable.ic_other_generic, R.color.sad_grey, ""),
-            Category("Vehículos", R.drawable.ic_other_generic, R.color.sad_grey, ""),
-            Category("Mantenimiento de vehiculos", R.drawable.ic_other_generic, R.color.sad_grey, ""),
-            Category("Recitales y eventos", R.drawable.ic_other_generic, R.color.sad_grey, ""),
-            Category("Prepaga y obra social", R.drawable.ic_other_generic, R.color.sad_grey, ""),
-            Category("Medicamentos e insumos", R.drawable.ic_other_generic, R.color.sad_grey, ""),
-            Category("Hobbies", R.drawable.ic_other_generic, R.color.sad_grey, ""),
-            Category("Pintura, dibujo y fotografía", R.drawable.ic_other_generic, R.color.sad_grey, ""),
-            Category("Inversiones y finanzas", R.drawable.ic_other_generic, R.color.sad_grey, ""),
-            Category("Salario", R.drawable.ic_other_generic, R.color.sad_grey, ""),
-        )
 
         val buttonAddReg = rootView.findViewById<Button>(R.id.addRegButton)
         buttonAddReg.setOnClickListener {
@@ -96,7 +82,7 @@ class HomeStartFragment : Fragment() {
         val adapter = RecordsAdapter()
         recyclerRegs.adapter = adapter
 
-        RecordsProvider.getProvider().listAll().forEach {
+        RecordsProvider.getProvider().getRecordsList().forEach {
             Log.d("Registro",it.toString())
         }
 

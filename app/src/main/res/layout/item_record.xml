@@ -16,7 +16,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/categoryIcon"
         android:layout_width="60dp"
         android:layout_height="58dp"
         android:layout_marginStart="1dp"
