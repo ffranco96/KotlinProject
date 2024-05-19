@@ -15,14 +15,14 @@ class RecordsProvider {
     fun registerListener(listener: ()->Unit){
         listeners.add(listener)
     }
-    val categories = mutableListOf(
+    private val categories = mutableListOf(
         Category("Comida y alimentos", R.drawable.ic_other_generic, R.color.sad_grey, ""),
         Category("Restaurant y comida rapida", R.drawable.ic_category_concerts_1, R.color.sad_grey, ""),
         Category("Ropa", R.drawable.ic_category_concerts_2, R.color.sad_grey, ""),
         Category("Vehículos", R.drawable.ic_category_concerts_3, R.color.sad_grey, ""),
-        Category("Mantenimiento de vehiculos", R.drawable.ic_category_concerts_4, R.color.sad_grey, ""),
+        Category("Mantenimiento vehiculos", R.drawable.ic_category_concerts_4, R.color.sad_grey, ""),
         Category("Recitales y eventos", R.drawable.ic_category_concerts_5, R.color.sad_grey, ""),
-        Category("Prepaga y obra social", R.drawable.ic_category_concerts_6, R.color.sad_grey, ""),
+        Category("Estudios particulares", R.drawable.ic_category_concerts_6, R.color.sad_grey, ""),
         Category("Medicamentos e insumos", R.drawable.ic_other_generic, R.color.sad_grey, ""),
         Category("Hobbies", R.drawable.ic_other_generic, R.color.sad_grey, ""),
         Category("Pintura, dibujo y fotografía", R.drawable.ic_other_generic, R.color.sad_grey, ""),
@@ -30,6 +30,10 @@ class RecordsProvider {
         Category("Salario", R.drawable.ic_other_generic, R.color.sad_grey, ""),
         Category("Otros", R.drawable.ic_other_generic, R.color.sad_grey, ""),
     )
+
+    private val categoriesIds = mutableListOf<String>("Comida y alimentos", "Restaurant y comida rapida", "Ropa",
+    "Vehiculos", "Matenimiento vehiculos", "Recitales y eventos", "Salud", "Estudios particulares", "Medicaments e insumos",
+    "Hobbies", "Pintura, dibujo y fotografia", "Inversiones y finanzas", "Salario") //@todo quiza se pueda hacer con los ids tomados del otro mutableList
 
     private val records = mutableListOf(
         Rec(80000.15,"Entrada La vela puerca", "Aca saque la entrada de la vela puerca", categories[1], "2024-05-25", "ARS"),
@@ -65,7 +69,11 @@ class RecordsProvider {
         }
     }
 
-    fun getcategoriesList():MutableList<Category>{
+    fun getCategoriesList():MutableList<Category>{
         return categories
+    }
+
+    fun getCategoriesIdsList():MutableList<String>{
+        return categoriesIds
     }
 }
