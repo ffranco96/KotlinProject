@@ -49,20 +49,20 @@ class AddRegFragmentDetail : Fragment() {
             activityContext.newRecord.description = descriptionEditText.text.toString()
             activityContext.newRecord.date = "2024-05-25" //@todo quitar hardcodeo
             when(categoriesSpinner.selectedItem.toString()){
-                "Comida y alimentos"-> activityContext.newRecord.category = provider.getCategoriesList()[5]
-                "Restaurant y comida rapida"-> activityContext.newRecord.category = provider.getCategoriesList()[5]
-                "Ropa"-> activityContext.newRecord.category = provider.getCategoriesList()[5]
-                "Vehiculos"-> activityContext.newRecord.category = provider.getCategoriesList()[5]
-                "Mantenimiento vehiculos"-> activityContext.newRecord.category = provider.getCategoriesList()[5]
+                "Comida y alimentos"-> activityContext.newRecord.category = provider.getCategoriesList()[0]
+                "Restaurant y comida rapida"-> activityContext.newRecord.category = provider.getCategoriesList()[1]
+                "Ropa"-> activityContext.newRecord.category = provider.getCategoriesList()[2]
+                "Vehiculos"-> activityContext.newRecord.category = provider.getCategoriesList()[3]
+                "Mantenimiento vehiculos"-> activityContext.newRecord.category = provider.getCategoriesList()[4]
                 "Recitales y eventos"-> activityContext.newRecord.category = provider.getCategoriesList()[5]
-                "Salud"-> activityContext.newRecord.category = provider.getCategoriesList()[5]
-                "Prepaga y obra social"-> activityContext.newRecord.category = provider.getCategoriesList()[5]
-                "Medicamentos e insumos"-> activityContext.newRecord.category = provider.getCategoriesList()[5]
-                "Hobbies"-> activityContext.newRecord.category = provider.getCategoriesList()[5]
-                "Pintura, dibujo y fotografia"-> activityContext.newRecord.category = provider.getCategoriesList()[5]
-                "Inversiones y finanzas"-> activityContext.newRecord.category = provider.getCategoriesList()[5]
-                "Salario"-> activityContext.newRecord.category = provider.getCategoriesList()[5]
-                else -> activityContext.newRecord.category = provider.getCategoriesList()[1] //@todo agregar resto de categorias almenos por ahora
+                "Salud"-> activityContext.newRecord.category = provider.getCategoriesList()[6]
+                "Estudios particulares"-> activityContext.newRecord.category = provider.getCategoriesList()[7]
+                "Medicamentos e insumos"-> activityContext.newRecord.category = provider.getCategoriesList()[8]
+                "Hobbies"-> activityContext.newRecord.category = provider.getCategoriesList()[9]
+                "Pintura, dibujo y fotografia"-> activityContext.newRecord.category = provider.getCategoriesList()[10]
+                "Inversiones y finanzas"-> activityContext.newRecord.category = provider.getCategoriesList()[11]
+                "Salario"-> activityContext.newRecord.category = provider.getCategoriesList()[12]
+                else -> activityContext.newRecord.category = provider.getCategoriesList()[13]
             }
 
             provider.addRecord(activityContext.newRecord)

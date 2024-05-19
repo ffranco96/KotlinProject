@@ -23,7 +23,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_category_concerts_5" />
+        app:srcCompat="@drawable/ic_category_concerts" />
 
     <TextView
         android:id="@+id/regTitle"
