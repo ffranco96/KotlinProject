@@ -1,5 +1,7 @@
 package com.example.kotlinproject.model
 
+import androidx.room.Room
+import com.example.kotlinproject.App
 import com.example.kotlinproject.R
 
 class RecordsProvider {
@@ -9,12 +11,23 @@ class RecordsProvider {
             return instance
         }
     }
+    private var records = mutableListOf<Rec>()
+    private var db:AppDataBase = Room.databaseBuilder(
+        App.context,
+        AppDataBase::class.java,
+        "recordsDB"
+    ).allowMainThreadQueries().addTypeConverter(Converters()).build() // TODO queries in main thread must be removed
+
+    init{
+        records = db.recsDao().getAll().toMutableList()
+    }
 
     private val listeners = mutableListOf<()->Unit>()
 
     fun registerListener(listener: ()->Unit){
         listeners.add(listener)
     }
+
     private val categories = mutableListOf(
         Category("Comida y alimentos", R.drawable.ic_category_food, R.color.sad_grey, ""),
         Category("Restaurant y comida rapida", R.drawable.ic_category_fast_food, R.color.sad_grey, ""),
@@ -36,25 +49,12 @@ class RecordsProvider {
     "Vehiculos", "Matenimiento vehiculos", "Recitales y eventos", "Salud", "Estudios particulares", "Medicaments e insumos",
     "Hobbies", "Pintura, dibujo y fotografia", "Inversiones y finanzas", "Salario") //@todo quiza se pueda hacer con los ids tomados del otro mutableList
 
-    private val records = mutableListOf(
-        Rec(80000.15,"Club de la milanesa", "Paga puchi a puchi", categories[1], "2024-05-25", "ARS"),
-        Rec(110000.65,"Modafinilo", "Paga la clau",categories[8], "2024-03-20", "ARS"),
-        Rec(190000.9,"Estudio del sueño", "estudio de Apneas en el IFN",categories[7], "2024-03-20", "ARS"),
-        Rec(110000.65,"Fideos Don vicente", "Cocina puchi",categories[0], "2024-03-20", "ARS"),
-        Rec(110000.65,"Entrada NTVG", "Aca saque la entrada de NTVG",categories[5], "2024-03-20", "ARS"),
-        Rec(110000.65,"Neumaticos", "Se hicieron pelota en Cordoba",categories[4], "2024-03-20", "ARS"),
-        //Rec(110000.65,"Entrada Airbag", "Aca saque la entrada de Airbag","Recitales y jodas", "2024-03-20", "ARS"),
-        //Rec(110000.65,"Entrada Soda Stereo", "Aca saque la entrada de Soda Stereo","Recitales y jodas", "2024-03-20", "ARS"),
-        //Rec(110000.65,"Entrada Pescado Rabioso", "Aca saque la entrada de Pescado Rabioso","Recitales y jodas", "2024-03-20", "ARS"),
-        //Rec(110000.65,"Entrada Jovenes Pordioseros", "Aca saque la entrada de Jovenes Pordioseros","Recitales y jodas", "2024-03-20", "ARS"),
-        //Rec(110000.65,"Entrada Sueño de Pescado", "Aca saque la entrada de Sueño de Pescado","Recitales y jodas", "2024-03-20", "ARS"),
-    )
-
     // Every time notes are added, also listeners are executed
     fun addRecord(record: Rec){
         records.add(record)
         listeners.forEach{
             it.invoke() // For each listener, executes lambda function
+            db.recsDao().insert(record)
         }
     }
 
