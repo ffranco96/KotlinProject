@@ -1,9 +1,12 @@
 package com.example.kotlinproject.adapters
 
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kotlinproject.R
 import com.example.kotlinproject.model.Rec
@@ -14,13 +17,26 @@ class RecordsAdapter: RecyclerView.Adapter<RecordsAdapter.RecordViewHolder>() {
     {
         fun bind(record: Rec){
             val recDescription = itemView.findViewById<TextView>(R.id.description)
+            val recAmount = itemView.findViewById<TextView>(R.id.amount)
+            val recDate = itemView.findViewById<TextView>(R.id.date)
+            val recTitle = itemView.findViewById<TextView>(R.id.regTitle)
+            val recCategoryIcon = itemView.findViewById<ImageView>(R.id.categoryIcon)
+
             recDescription.text = record.description
+            recAmount.text = record.amount.toString()
+            recDate.text = record.date
+            recTitle.text = record.title
+
+            val context = itemView.context
+            val categoryId = record.category.iconRsc
+            val drawable = ContextCompat.getDrawable(context, categoryId)
+            recCategoryIcon.setImageDrawable(drawable)
         }
     }
 
     // Bind data from a viewHolder with one (and just one) position
     override fun onBindViewHolder(holder: RecordViewHolder, position: Int) {
-        val record = RecordsProvider.getProvider().get(position)
+        val record = RecordsProvider.getProvider().getRecord(position)
 
         record?.let{
             holder.bind(record)
@@ -35,7 +51,7 @@ class RecordsAdapter: RecyclerView.Adapter<RecordsAdapter.RecordViewHolder>() {
     }
 
     override fun getItemCount(): Int {
-        return RecordsProvider.getProvider().listAll().count()
+        return RecordsProvider.getProvider().getRecordsList().count()
     }
 
 }

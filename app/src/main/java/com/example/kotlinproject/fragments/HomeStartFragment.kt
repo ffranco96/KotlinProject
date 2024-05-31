@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.kotlinproject.R
 import com.example.kotlinproject.activities.AddRegActivity
 import com.example.kotlinproject.adapters.RecordsAdapter
+import com.example.kotlinproject.model.Category
 import com.example.kotlinproject.model.RecordsProvider
 import com.example.kotlinproject.services.CryptoValuesService
 
@@ -81,7 +82,7 @@ class HomeStartFragment : Fragment() {
         val adapter = RecordsAdapter()
         recyclerRegs.adapter = adapter
 
-        RecordsProvider.getProvider().listAll().forEach {
+        RecordsProvider.getProvider().getRecordsList().forEach {
             Log.d("Registro",it.toString())
         }
 
