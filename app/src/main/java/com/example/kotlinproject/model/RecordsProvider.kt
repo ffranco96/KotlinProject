@@ -12,14 +12,12 @@ class RecordsProvider {
         }
     }
     private var records = mutableListOf<Rec>()
-    private var db:AppDataBase = Room.databaseBuilder(
-        App.context,
-        AppDataBase::class.java,
-        "recordsDB"
-    ).allowMainThreadQueries().addTypeConverter(Converters()).build() // TODO queries in main thread must be removed
+    private var balances = mutableListOf<Balance>()
 
+    private var db:AppDataBase = AppDataBase.getInstance()
     init{
         records = db.recsDao().getAll().toMutableList()
+        balances = db.balancesDao().getAll().toMutableList()
     }
 
     private val listeners = mutableListOf<()->Unit>()
