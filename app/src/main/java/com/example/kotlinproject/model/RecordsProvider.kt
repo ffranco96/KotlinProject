@@ -35,13 +35,13 @@ class RecordsProvider {
         Category("Vehículos", R.drawable.ic_category_vehicle, R.color.sad_grey, ""),
         Category("Mantenimiento vehiculos", R.drawable.ic_category_vehicle_maintenance, R.color.sad_grey, ""),
         Category("Recitales y eventos", R.drawable.ic_category_concerts, R.color.sad_grey, ""),
-        Category("Salud", R.drawable.ic_category_health_2, R.color.sad_grey, ""),
+        Category("Salud", R.drawable.ic_category_health, R.color.sad_grey, ""),
         Category("Estudios particulares", R.drawable.ic_category_particular_studies, R.color.sad_grey, ""),
         Category("Medicamentos e insumos", R.drawable.ic_category_medicine, R.color.sad_grey, ""),
         Category("Hobbies", R.drawable.ic_category_hobbies, R.color.sad_grey, ""),
         Category("Pintura, dibujo y fotografía", R.drawable.ic_category_painting_drawing_and_photography, R.color.sad_grey, ""),
-        Category("Inversiones y finanzas", R.drawable.ic_category_investment_and_finances_2, R.color.sad_grey, ""),
-        Category("Salario", R.drawable.ic_category_salary_2, R.color.sad_grey, ""),
+        Category("Inversiones y finanzas", R.drawable.ic_category_investment_and_finances, R.color.sad_grey, ""),
+        Category("Salario", R.drawable.ic_category_salary, R.color.sad_grey, ""),
         Category("Otros", R.drawable.ic_other_generic, R.color.sad_grey, ""),
     )
 
