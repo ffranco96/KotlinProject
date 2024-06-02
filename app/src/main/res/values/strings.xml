@@ -3,6 +3,9 @@
     <!-- Strings used for fragments for navigation -->
 
     <string name="title_activity_home">HomeActivity</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="text_view_first_fiat_currency">ARS</string>
+    <string name="text_view_second_fiat_currency">USD</string>
+    <string name="text_view_first_cripto_currency">USDT</string>
+    <string name="text_view_second_cripto_currency">BTC</string>
+    <string name="text_view_third_cripto_currency">ETH</string>
 </resources>

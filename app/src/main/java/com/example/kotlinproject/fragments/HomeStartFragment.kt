@@ -14,6 +14,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.kotlinproject.App
 import com.example.kotlinproject.R
 import com.example.kotlinproject.activities.AddRegActivity
 import com.example.kotlinproject.adapters.RecordsAdapter
@@ -23,6 +24,8 @@ import com.example.kotlinproject.services.CryptoValuesService
 
 class HomeStartFragment : Fragment() {
     var textBtcValue: TextView? = null
+    var textFirstCurrencyBalance: TextView? = null
+
     //@todo en esta screen se puede agregar un selector de moneda que, de paso, active un intent para mostrar su precio
     val receiver = object: BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
@@ -43,7 +46,13 @@ class HomeStartFragment : Fragment() {
         val intentFilter = IntentFilter(CryptoValuesService.ACTION_CRYPTO_VALUES)
         activity?.registerReceiver(receiver, intentFilter)
         super.onResume()
-        RecordsProvider.getProvider().updateTotalBalance()
+        val provider = RecordsProvider.getProvider()
+        if(provider.updateTotalBalance() == App.RET_FALSE){
+            textFirstCurrencyBalance?.text = 0.0.toString()
+        } else {
+            val obtainedTotalsReg = provider.getDb().balancesDao().getTotalsReg()
+            textFirstCurrencyBalance?.text = obtainedTotalsReg.amount.toString()
+        }
     }
 
     override fun onPause() {
@@ -58,6 +67,7 @@ class HomeStartFragment : Fragment() {
         // Inflate the layout for this fragment
         val rootView = inflater.inflate(R.layout.fragment_home_start, container, false)
         textBtcValue = rootView.findViewById(R.id.textBtcValue)
+        textFirstCurrencyBalance = rootView.findViewById(R.id.textViewFirstCurrencyBalance)
 
         val buttonAddReg = rootView.findViewById<Button>(R.id.addRegButton)
         buttonAddReg.setOnClickListener {

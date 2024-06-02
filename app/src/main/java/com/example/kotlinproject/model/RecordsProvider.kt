@@ -52,7 +52,8 @@ class RecordsProvider {
     "Vehiculos", "Matenimiento vehiculos", "Recitales y eventos", "Salud", "Estudios particulares", "Medicaments e insumos",
     "Hobbies", "Pintura, dibujo y fotografia", "Inversiones y finanzas", "Salario") //@todo quiza se pueda hacer con los ids tomados del otro mutableList
 
-    fun updateTotalBalance(){
+    fun updateTotalBalance(): Int{
+        var iRet: Int
         if(db.balancesDao().countBalances() > 0) {
             // Obtain current records and perform total amount operation
             var auxTotal : Double = 0.0
@@ -66,10 +67,12 @@ class RecordsProvider {
             Log.d("Debugger", "Nuevo total: $auxTotal")
             obtainedTotalsReg.amount = auxTotal
             db.balancesDao().updateTotalsReg(obtainedTotalsReg)
+            iRet = App.RET_TRUE
         } else {
-            // TODO manage error
             Log.d("Errors", "No hay registros en la tabla de balances")
+            iRet = App.RET_FALSE
         }
+        return iRet // TODO manage errors with exceptions
     }
 
     // Every time notes are added, also listeners are executed
@@ -102,5 +105,9 @@ class RecordsProvider {
 
     fun getCategoriesIdsList():MutableList<String>{
         return categoriesIds
+    }
+
+    fun getDb():AppDataBase{
+        return db
     }
 }
