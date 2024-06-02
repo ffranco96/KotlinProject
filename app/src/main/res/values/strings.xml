@@ -8,4 +8,6 @@
     <string name="text_view_first_cripto_currency">USDT</string>
     <string name="text_view_second_cripto_currency">BTC</string>
     <string name="text_view_third_cripto_currency">ETH</string>
+    <string name="switch_income_expenses">Gasto/Ingreso</string>
+
 </resources>
