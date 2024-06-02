@@ -1,5 +1,6 @@
 package com.example.kotlinproject.model
 
+import android.util.Log
 import androidx.room.Room
 import com.example.kotlinproject.App
 import com.example.kotlinproject.R
@@ -26,6 +27,10 @@ class RecordsProvider {
         listeners.add(listener)
     }
 
+    fun unregisterListener(listener: ()->Unit){// TODO llamar cuando se vuelve para atrás
+        listeners.remove(listener)
+    }
+
     private val categories = mutableListOf(
         Category("Comida y alimentos", R.drawable.ic_category_food, R.color.sad_grey, ""),
         Category("Restaurant y comida rapida", R.drawable.ic_category_fast_food, R.color.sad_grey, ""),
@@ -47,13 +52,36 @@ class RecordsProvider {
     "Vehiculos", "Matenimiento vehiculos", "Recitales y eventos", "Salud", "Estudios particulares", "Medicaments e insumos",
     "Hobbies", "Pintura, dibujo y fotografia", "Inversiones y finanzas", "Salario") //@todo quiza se pueda hacer con los ids tomados del otro mutableList
 
+    fun updateTotalBalance(){
+        if(db.balancesDao().countBalances() > 0) {
+            // Obtain current records and perform total amount operation
+            var auxTotal : Double = 0.0
+            val currentRecs = db.recsDao().getAll()
+            currentRecs.forEach{
+                auxTotal += it.amount
+            }
+
+            // Update total amount record
+            val obtainedTotalsReg = db.balancesDao().getTotalsReg()
+            Log.d("Debugger", "Nuevo total: $auxTotal")
+            obtainedTotalsReg.amount = auxTotal
+            db.balancesDao().updateTotalsReg(obtainedTotalsReg)
+        } else {
+            // TODO manage error
+            Log.d("Errors", "No hay registros en la tabla de balances")
+        }
+    }
+
     // Every time notes are added, also listeners are executed
     fun addRecord(record: Rec){
         records.add(record)
-        listeners.forEach{
-            it.invoke() // For each listener, executes lambda function
-            db.recsDao().insert(record)
+        listeners.forEach{ it.invoke()}
+        db.recsDao().insert(record)
+        if(db.balancesDao().countBalances() == 0) {
+            Log.d("Debugger", "Initialize balances table")
+            db.balancesDao().insert(Balance("totals", 0, 0.0))
         }
+        updateTotalBalance()
     }
 
     fun getRecordsList():MutableList<Rec>{

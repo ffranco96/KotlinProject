@@ -14,6 +14,12 @@ interface BalancesDAO {
     @Query("SELECT * FROM BALANCES where id = :balanceId LIMIT 1")
     fun getById(balanceId:Int): Balance
 
+    @Query("SELECT * FROM BALANCES where balance_type LIKE 'totals' LIMIT 1")
+    fun getTotalsReg(): Balance
+
+    @Query("SELECT COUNT (*) FROM BALANCES")
+    fun countBalances():Int
+
     @Query("SELECT * FROM BALANCES WHERE id IN (:balancesIds) LIMIT :balancesQtty")
     fun getNotesByIds(balancesIds: IntArray, balancesQtty: Int): List<Balance>
 
@@ -31,4 +37,7 @@ interface BalancesDAO {
 
     @Update
     fun update(balance: Balance)
+
+    @Update
+    fun updateTotalsReg(balance: Balance)
 }

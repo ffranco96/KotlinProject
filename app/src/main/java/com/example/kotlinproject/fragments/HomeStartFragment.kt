@@ -43,6 +43,7 @@ class HomeStartFragment : Fragment() {
         val intentFilter = IntentFilter(CryptoValuesService.ACTION_CRYPTO_VALUES)
         activity?.registerReceiver(receiver, intentFilter)
         super.onResume()
+        RecordsProvider.getProvider().updateTotalBalance()
     }
 
     override fun onPause() {

@@ -11,11 +11,12 @@ interface RecordsDAO {
     @Query("SELECT * FROM RECORDS")
     fun getAll(): List<Rec>
 
-    @Query("SELECT * FROM RECORDS where id = :recId LIMIT 1") // LIMIT 1 para obtener solo primer resultado
-    fun getById(recId:Int): Rec
+    //@Query("SELECT * FROM RECORDS where id = :recId LIMIT 1") // LIMIT 1 para obtener solo primer resultado
+    //fun getById(recId:Int): Rec
 
-    @Query("SELECT * FROM RECORDS WHERE id IN (:recsIds) LIMIT :recordsQty")
-    fun getRecordsByIds(recsIds: IntArray, recordsQty: Int): List<Rec>
+    // TODO se debe arreglar cuando se necesiten obtener varios registros por categoria
+    //@Query("SELECT * FROM RECORDS WHERE id IN (:recsIds) LIMIT :recordsQty")
+    //fun getRecordsByIds(recsIds: IntArray, recordsQty: Int): List<Rec>
 
     @Query("SELECT * FROM RECORDS WHERE title LIKE :title AND" +
             ":text LIKE :text LIMIT 1")
