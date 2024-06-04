@@ -18,7 +18,6 @@ import com.example.kotlinproject.App
 import com.example.kotlinproject.R
 import com.example.kotlinproject.activities.AddRegActivity
 import com.example.kotlinproject.adapters.RecordsAdapter
-import com.example.kotlinproject.model.Category
 import com.example.kotlinproject.model.RecordsProvider
 import com.example.kotlinproject.services.CryptoValuesService
 
@@ -50,7 +49,7 @@ class HomeStartFragment : Fragment() {
         if(provider.updateTotalBalance() == App.RET_FALSE){
             textFirstCurrencyBalance?.text = 0.0.toString()
         } else {
-            val obtainedTotalsReg = provider.getDb().balancesDao().getTotalsReg()
+            val obtainedTotalsReg = provider.getDb().balancesDao().getTotalBalanceRec()
             textFirstCurrencyBalance?.text = obtainedTotalsReg.amount.toString()
         }
     }

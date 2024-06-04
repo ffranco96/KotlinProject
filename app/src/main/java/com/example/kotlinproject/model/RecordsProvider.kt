@@ -1,7 +1,6 @@
 package com.example.kotlinproject.model
 
 import android.util.Log
-import androidx.room.Room
 import com.example.kotlinproject.App
 import com.example.kotlinproject.R
 
@@ -63,13 +62,36 @@ class RecordsProvider {
             }
 
             // Update total amount record
-            val obtainedTotalsReg = db.balancesDao().getTotalsReg()
+            val obtainedTotalsReg = db.balancesDao().getTotalBalanceRec()
             Log.d("Debugger", "Nuevo total: $auxTotal")
             obtainedTotalsReg.amount = auxTotal
-            db.balancesDao().updateTotalsReg(obtainedTotalsReg)
+            db.balancesDao().updateTotalBalanceRec(obtainedTotalsReg)
             iRet = App.RET_TRUE
         } else {
-            Log.d("Errors", "No hay registros en la tabla de balances")
+            Log.d("Debugger", "No hay registros en la tabla de balances")
+            iRet = App.RET_FALSE
+        }
+        return iRet // TODO manage errors with exceptions
+    }
+
+    fun updateCategoryBalance(record : Rec): Int{
+        var iRet: Int
+        if(db.balancesDao().countBalances() > 0) {
+            val obtainedCategBalance = db.balancesDao().getCategoryBalanceRec(record.category.toString())
+            val amount = record.amount
+            // Check existence of category rec and update category total amount
+            if(obtainedCategBalance != null){
+                obtainedCategBalance.amount += amount
+                db.balancesDao().updateCategoryBalanceRec(obtainedCategBalance.amount, record.category.toString()) // TODO ver si usar converters
+            } else {
+                // Category balances record doesn't exist
+                db.balancesDao().insertIntoBalances(Balance(record.category.toString(), 1, record.amount))
+            }
+
+            Log.d("Debugger", "Al total se le suman: $amount")
+            iRet = App.RET_TRUE
+        } else {
+            Log.d("Debugger", "No hay registros en la tabla de balances")
             iRet = App.RET_FALSE
         }
         return iRet // TODO manage errors with exceptions
@@ -82,8 +104,9 @@ class RecordsProvider {
         db.recsDao().insert(record)
         if(db.balancesDao().countBalances() == 0) {
             Log.d("Debugger", "Initialize balances table")
-            db.balancesDao().insert(Balance("totals", 0, 0.0))
+            db.balancesDao().insertIntoBalances(Balance("totals", 0, 0.0))
         }
+        updateCategoryBalance(record)
         updateTotalBalance()
     }
 

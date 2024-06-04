@@ -7,7 +7,7 @@ import androidx.room.TypeConverter
 class Converters {
     @TypeConverter
     fun fromCategory(category: Category): String {
-        return "${category.id},${category.iconRsc},${category.colorIcon},${category.details}"
+        return "${category.categoryName},${category.iconRsc},${category.colorIcon},${category.details}"
     }
 
     @TypeConverter

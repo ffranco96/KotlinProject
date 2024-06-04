@@ -15,7 +15,10 @@ interface BalancesDAO {
     fun getById(balanceId:Int): Balance
 
     @Query("SELECT * FROM BALANCES where balance_type LIKE 'totals' LIMIT 1")
-    fun getTotalsReg(): Balance
+    fun getTotalBalanceRec(): Balance
+
+    @Query("SELECT * FROM BALANCES where balance_type LIKE :categoryName LIMIT 1")
+    fun getCategoryBalanceRec(categoryName: String): Balance
 
     @Query("SELECT COUNT (*) FROM BALANCES")
     fun countBalances():Int
@@ -30,14 +33,14 @@ interface BalancesDAO {
     fun deleteAll()
 
     @Insert
-    fun insert(vararg balance: Balance)
+    fun insertIntoBalances(vararg balance: Balance)
 
     @Delete
-    fun delete(balance: Balance)
+    fun deleteOnBalances(balance: Balance)
+
+    @Query("UPDATE BALANCES SET amount = :amount WHERE balance_type = :category")
+    fun updateCategoryBalanceRec(amount: Double, category: String)
 
     @Update
-    fun update(balance: Balance)
-
-    @Update
-    fun updateTotalsReg(balance: Balance)
+    fun updateTotalBalanceRec(balance: Balance)
 }
