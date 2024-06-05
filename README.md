@@ -8,3 +8,7 @@ If not, manages an error and returns.
 
 Switch:
 Added switch. Now amount depends on switch: left (off) is an expense. Rigth (on) is an income.
+
+Graphs:
+At least one category must be operated to add at least 1 category record in BALANCES TABLE.
+This must happen to enable Graphs View button on home screen. Otherwise, button must be grey.

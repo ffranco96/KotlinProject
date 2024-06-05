@@ -11,8 +11,8 @@ interface BalancesDAO {
     @Query("SELECT * FROM BALANCES")
     fun getAll(): List<Balance>
 
-    @Query("SELECT * FROM BALANCES where id = :balanceId LIMIT 1")
-    fun getById(balanceId:Int): Balance
+    @Query("SELECT * FROM BALANCES where id = :balanceType LIMIT 1")
+    fun getBalanceByBalanceType(balanceType: String): Balance
 
     @Query("SELECT * FROM BALANCES where balance_type LIKE 'totals' LIMIT 1")
     fun getTotalBalanceRec(): Balance
@@ -24,7 +24,7 @@ interface BalancesDAO {
     fun countBalances():Int
 
     @Query("SELECT * FROM BALANCES WHERE id IN (:balancesIds) LIMIT :balancesQtty")
-    fun getNotesByIds(balancesIds: IntArray, balancesQtty: Int): List<Balance>
+    fun getBalancesByIds(balancesIds: IntArray, balancesQtty: Int): List<Balance>
 
     @Query("SELECT * FROM BALANCES WHERE balance_type LIKE :type")
     fun findByText(type: String): Balance
