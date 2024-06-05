@@ -11,7 +11,6 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Spinner
 import android.widget.Switch
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.example.kotlinproject.R
 import com.example.kotlinproject.activities.AddRegActivity
@@ -33,7 +32,7 @@ class AddRegFragmentAmount : Fragment() {
 
         // Buttons
         val nextButton = rootView.findViewById<ImageButton>(R.id.nextButton)
-        val cancelButton = rootView.findViewById<ImageButton>(R.id.cancelButton)
+        val cancelButton = rootView.findViewById<ImageButton>(R.id.cancelButton2)
         val amountEditText = rootView.findViewById<EditText>(R.id.amountEditText)
         val incomeExpensesSwitch = rootView.findViewById<Switch>(R.id.incomeExpensesSwitch)
 

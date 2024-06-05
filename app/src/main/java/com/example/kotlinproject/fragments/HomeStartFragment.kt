@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.kotlinproject.App
 import com.example.kotlinproject.R
 import com.example.kotlinproject.activities.AddRegActivity
+import com.example.kotlinproject.activities.ViewGraphsActivity
 import com.example.kotlinproject.adapters.RecordsAdapter
 import com.example.kotlinproject.model.RecordsProvider
 import com.example.kotlinproject.services.CryptoValuesService
@@ -83,6 +84,11 @@ class HomeStartFragment : Fragment() {
             activity?.startService(intent)
         }
 
+        val buttonViewGraphs = rootView.findViewById<Button>(R.id.buttonViewGraphs)
+        buttonViewGraphs.setOnClickListener {
+            goToViewGraphs()
+        }
+
         // Configurar RecyclerView
         val recyclerRegs = rootView.findViewById<RecyclerView>(R.id.recyclerRegs)
         recyclerRegs.layoutManager = LinearLayoutManager(
@@ -101,6 +107,10 @@ class HomeStartFragment : Fragment() {
         }
 
         return rootView
+    }
+    private fun goToViewGraphs() {
+        val intent = Intent(activity, ViewGraphsActivity::class.java)
+        startActivity(intent)
     }
 
     private fun goToAddReg() {
