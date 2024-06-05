@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.kotlinproject.App
 import com.example.kotlinproject.R
 import com.example.kotlinproject.activities.AddRegActivity
+import com.example.kotlinproject.activities.ViewGraphsActivity
 import com.example.kotlinproject.adapters.RecordsAdapter
 import com.example.kotlinproject.model.RecordsProvider
 import com.example.kotlinproject.services.CryptoValuesService
@@ -24,6 +25,7 @@ import com.example.kotlinproject.services.CryptoValuesService
 class HomeStartFragment : Fragment() {
     var textBtcValue: TextView? = null
     var textFirstCurrencyBalance: TextView? = null
+    var buttonViewGraphs: Button? = null
 
     //@todo en esta screen se puede agregar un selector de moneda que, de paso, active un intent para mostrar su precio
     val receiver = object: BroadcastReceiver() {
@@ -46,11 +48,24 @@ class HomeStartFragment : Fragment() {
         activity?.registerReceiver(receiver, intentFilter)
         super.onResume()
         val provider = RecordsProvider.getProvider()
+
+        // Update amount on home screen
         if(provider.updateTotalBalance() == App.RET_FALSE){
             textFirstCurrencyBalance?.text = 0.0.toString()
         } else {
             val obtainedTotalsReg = provider.getDb().balancesDao().getTotalBalanceRec()
             textFirstCurrencyBalance?.text = obtainedTotalsReg.amount.toString()
+        }
+
+        // Update state of graphs button
+        if(provider.getDb().balancesDao().countBalances() < 2) {
+            buttonViewGraphs?.isClickable = false
+            buttonViewGraphs?.isEnabled = false
+            buttonViewGraphs?.setBackgroundColor(requireContext().getColor(R.color.sad_grey))
+        } else {
+            buttonViewGraphs?.isClickable = true
+            buttonViewGraphs?.isEnabled = true
+            buttonViewGraphs?.setBackgroundColor(requireContext().getColor(R.color.dark_blue))
         }
     }
 
@@ -83,6 +98,11 @@ class HomeStartFragment : Fragment() {
             activity?.startService(intent)
         }
 
+        buttonViewGraphs = rootView.findViewById<Button>(R.id.buttonViewGraphs)
+        buttonViewGraphs?.setOnClickListener {
+            goToViewGraphs()
+        }
+
         // Configurar RecyclerView
         val recyclerRegs = rootView.findViewById<RecyclerView>(R.id.recyclerRegs)
         recyclerRegs.layoutManager = LinearLayoutManager(
@@ -101,6 +121,10 @@ class HomeStartFragment : Fragment() {
         }
 
         return rootView
+    }
+    private fun goToViewGraphs() {
+        val intent = Intent(activity, ViewGraphsActivity::class.java)
+        startActivity(intent)
     }
 
     private fun goToAddReg() {
