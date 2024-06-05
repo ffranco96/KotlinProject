@@ -25,6 +25,7 @@ import com.example.kotlinproject.services.CryptoValuesService
 class HomeStartFragment : Fragment() {
     var textBtcValue: TextView? = null
     var textFirstCurrencyBalance: TextView? = null
+    var buttonViewGraphs: Button? = null
 
     //@todo en esta screen se puede agregar un selector de moneda que, de paso, active un intent para mostrar su precio
     val receiver = object: BroadcastReceiver() {
@@ -47,11 +48,24 @@ class HomeStartFragment : Fragment() {
         activity?.registerReceiver(receiver, intentFilter)
         super.onResume()
         val provider = RecordsProvider.getProvider()
+
+        // Update amount on home screen
         if(provider.updateTotalBalance() == App.RET_FALSE){
             textFirstCurrencyBalance?.text = 0.0.toString()
         } else {
             val obtainedTotalsReg = provider.getDb().balancesDao().getTotalBalanceRec()
             textFirstCurrencyBalance?.text = obtainedTotalsReg.amount.toString()
+        }
+
+        // Update state of graphs button
+        if(provider.getDb().balancesDao().countBalances() < 2) {
+            buttonViewGraphs?.isClickable = false
+            buttonViewGraphs?.isEnabled = false
+            buttonViewGraphs?.setBackgroundColor(requireContext().getColor(R.color.sad_grey))
+        } else {
+            buttonViewGraphs?.isClickable = true
+            buttonViewGraphs?.isEnabled = true
+            buttonViewGraphs?.setBackgroundColor(requireContext().getColor(R.color.dark_blue))
         }
     }
 
@@ -84,8 +98,8 @@ class HomeStartFragment : Fragment() {
             activity?.startService(intent)
         }
 
-        val buttonViewGraphs = rootView.findViewById<Button>(R.id.buttonViewGraphs)
-        buttonViewGraphs.setOnClickListener {
+        buttonViewGraphs = rootView.findViewById<Button>(R.id.buttonViewGraphs)
+        buttonViewGraphs?.setOnClickListener {
             goToViewGraphs()
         }
 
