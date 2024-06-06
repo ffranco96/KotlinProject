@@ -15,7 +15,29 @@ class RecordsProvider {
     private var balances = mutableListOf<Balance>()
 
     private var db:AppDataBase = AppDataBase.getInstance()
+
+    private var categoriesIds = mutableListOf<String>()
+    private var categories = mutableListOf(
+        Category("Comida y alimentos", R.drawable.ic_category_food, R.color.sad_grey, ""),
+        Category("Restaurant y comida rapida", R.drawable.ic_category_fast_food, R.color.sad_grey, ""),
+        Category("Ropa", R.drawable.ic_category_clothes, R.color.sad_grey, ""),
+        Category("Vehiculos", R.drawable.ic_category_vehicle, R.color.sad_grey, ""),
+        Category("Mantenimiento vehiculos", R.drawable.ic_category_vehicle_maintenance, R.color.sad_grey, ""),
+        Category("Recitales y eventos", R.drawable.ic_category_concerts, R.color.sad_grey, ""),
+        Category("Salud", R.drawable.ic_category_health, R.color.sad_grey, ""),
+        Category("Estudios particulares", R.drawable.ic_category_particular_studies, R.color.sad_grey, ""),
+        Category("Medicamentos e insumos", R.drawable.ic_category_medicine, R.color.sad_grey, ""),
+        Category("Hobbies", R.drawable.ic_category_hobbies, R.color.sad_grey, ""),
+        Category("Pintura, dibujo y fotografia", R.drawable.ic_category_painting_drawing_and_photography, R.color.sad_grey, ""),
+        Category("Inversiones y finanzas", R.drawable.ic_category_investment_and_finances, R.color.sad_grey, ""),
+        Category("Salario", R.drawable.ic_category_salary, R.color.sad_grey, ""),
+        Category("Otros", R.drawable.ic_other_generic, R.color.sad_grey, ""),
+    )
+
     init{
+        categories.forEach{ category ->
+            categoriesIds.add(category.categoryName)
+        }
         records = db.recsDao().getAll().toMutableList()
         balances = db.balancesDao().getAll().toMutableList()
     }
@@ -29,27 +51,6 @@ class RecordsProvider {
     fun unregisterListener(listener: ()->Unit){// TODO llamar cuando se vuelve para atrás
         listeners.remove(listener)
     }
-
-    private val categories = mutableListOf(
-        Category("Comida y alimentos", R.drawable.ic_category_food, R.color.sad_grey, ""),
-        Category("Restaurant y comida rapida", R.drawable.ic_category_fast_food, R.color.sad_grey, ""),
-        Category("Ropa", R.drawable.ic_category_clothes, R.color.sad_grey, ""),
-        Category("Vehículos", R.drawable.ic_category_vehicle, R.color.sad_grey, ""),
-        Category("Mantenimiento vehiculos", R.drawable.ic_category_vehicle_maintenance, R.color.sad_grey, ""),
-        Category("Recitales y eventos", R.drawable.ic_category_concerts, R.color.sad_grey, ""),
-        Category("Salud", R.drawable.ic_category_health, R.color.sad_grey, ""),
-        Category("Estudios particulares", R.drawable.ic_category_particular_studies, R.color.sad_grey, ""),
-        Category("Medicamentos e insumos", R.drawable.ic_category_medicine, R.color.sad_grey, ""),
-        Category("Hobbies", R.drawable.ic_category_hobbies, R.color.sad_grey, ""),
-        Category("Pintura, dibujo y fotografía", R.drawable.ic_category_painting_drawing_and_photography, R.color.sad_grey, ""),
-        Category("Inversiones y finanzas", R.drawable.ic_category_investment_and_finances, R.color.sad_grey, ""),
-        Category("Salario", R.drawable.ic_category_salary, R.color.sad_grey, ""),
-        Category("Otros", R.drawable.ic_other_generic, R.color.sad_grey, ""),
-    )
-
-    private val categoriesIds = mutableListOf<String>("Comida y alimentos", "Restaurant y comida rapida", "Ropa",
-    "Vehiculos", "Matenimiento vehiculos", "Recitales y eventos", "Salud", "Estudios particulares", "Medicaments e insumos",
-    "Hobbies", "Pintura, dibujo y fotografia", "Inversiones y finanzas", "Salario") //@todo quiza se pueda hacer con los ids tomados del otro mutableList
 
     fun updateTotalBalance(): Int{
         var iRet: Int

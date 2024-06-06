@@ -47,7 +47,7 @@ class HomeStartFragment : Fragment() {
         val intentFilter = IntentFilter(CryptoValuesService.ACTION_CRYPTO_VALUES)
         activity?.registerReceiver(receiver, intentFilter)
         super.onResume()
-        val provider = RecordsProvider.getProvider()
+        val provider = RecordsProvider.getProvider() // TODO podria haber ido en el activity principal
 
         // Update amount on home screen
         if(provider.updateTotalBalance() == App.RET_FALSE){
@@ -112,13 +112,13 @@ class HomeStartFragment : Fragment() {
         val adapter = RecordsAdapter()
         recyclerRegs.adapter = adapter
 
-        RecordsProvider.getProvider().getRecordsList().forEach {
-            Log.d("Registro",it.toString())
-        }
+        //RecordsProvider.getProvider().getRecordsList().forEach { TODO delete
+        //    Log.d("Registro",it.toString())
+        //}
 
-        RecordsProvider.getProvider().registerListener {
-            adapter.notifyDataSetChanged()
-        }
+        //RecordsProvider.getProvider().registerListener { TODO move or delete
+        //    adapter.notifyDataSetChanged()
+        //}
 
         return rootView
     }
