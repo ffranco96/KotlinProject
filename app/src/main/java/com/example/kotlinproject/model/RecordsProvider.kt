@@ -55,20 +55,24 @@ class RecordsProvider {
     fun updateTotalBalance(): Int{
         var iRet: Int
         if(db.balancesDao().countBalances() > 0) {
-            // Obtain current records and perform total amount operation
+            // Obtain current records and perform total amount and total qtty operations
             var auxTotal : Double = 0.0
+            var auxQtty : Int = 0
             val currentRecs = db.recsDao().getAll()
             currentRecs.forEach{
                 auxTotal += it.amount
+                auxQtty++
             }
 
-            // Update total amount record
+            // Update total balance record
             val obtainedTotalsReg = db.balancesDao().getTotalBalanceRec()
             Log.d("Debugger", "Nuevo total: $auxTotal")
             obtainedTotalsReg.amount = auxTotal
+            obtainedTotalsReg.qtty = auxQtty
             db.balancesDao().updateTotalBalanceRec(obtainedTotalsReg)
             iRet = App.RET_TRUE
         } else {
+            // Totals record doesn't exist
             Log.d("Debugger", "No hay registros en la tabla de balances")
             iRet = App.RET_FALSE
         }
@@ -83,9 +87,10 @@ class RecordsProvider {
             // Check existence of category rec and update category total amount
             if(obtainedCategBalance != null){
                 obtainedCategBalance.amount += amount
+                obtainedCategBalance.qtty++
                 db.balancesDao().updateCategoryBalanceRec(obtainedCategBalance.amount, record.category.toString()) // TODO ver si usar converters
             } else {
-                // Category balances record doesn't exist
+                // Total balances record doesn't exist. Adds it
                 db.balancesDao().insertIntoBalances(Balance(record.category.toString(), 1, record.amount))
             }
 
