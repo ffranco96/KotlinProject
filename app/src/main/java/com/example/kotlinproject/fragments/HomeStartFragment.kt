@@ -80,6 +80,8 @@ class HomeStartFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val rootView = inflater.inflate(R.layout.fragment_home_start, container, false)
+        val provider = RecordsProvider.getProvider()
+
         textBtcValue = rootView.findViewById(R.id.textBtcValue)
         textFirstCurrencyBalance = rootView.findViewById(R.id.textViewFirstCurrencyBalance)
 
@@ -112,13 +114,9 @@ class HomeStartFragment : Fragment() {
         val adapter = RecordsAdapter()
         recyclerRegs.adapter = adapter
 
-        //RecordsProvider.getProvider().getRecordsList().forEach { TODO delete
-        //    Log.d("Registro",it.toString())
-        //}
-
-        //RecordsProvider.getProvider().registerListener { TODO move or delete
-        //    adapter.notifyDataSetChanged()
-        //}
+        provider.registerListener {
+            adapter.notifyDataSetChanged()
+        }
 
         return rootView
     }
