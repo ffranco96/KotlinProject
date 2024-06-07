@@ -68,7 +68,7 @@
         android:layout_height="21dp"
         android:layout_marginTop="64dp"
         android:layout_marginEnd="8dp"
-        android:text="@string/switch_income"
+        android:text="@string/text_switch_income"
         android:textAlignment="center"
         app:layout_constraintEnd_toStartOf="@+id/currencySpinner"
         app:layout_constraintTop_toBottomOf="@+id/amountEditText" />
@@ -79,7 +79,7 @@
         android:layout_height="24dp"
         android:layout_marginTop="64dp"
         android:layout_marginEnd="132dp"
-        android:text="@string/switch_expenses"
+        android:text="@string/text_switch_expenses"
         android:textAlignment="center"
         app:layout_constraintEnd_toStartOf="@+id/currencySpinner"
         app:layout_constraintTop_toBottomOf="@+id/amountEditText" />

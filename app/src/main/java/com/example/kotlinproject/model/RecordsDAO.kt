@@ -18,10 +18,6 @@ interface RecordsDAO {
     //@Query("SELECT * FROM RECORDS WHERE id IN (:recsIds) LIMIT :recordsQty")
     //fun getRecordsByIds(recsIds: IntArray, recordsQty: Int): List<Rec>
 
-    @Query("SELECT * FROM RECORDS WHERE title LIKE :title AND" +
-            ":text LIKE :text LIMIT 1")
-    fun findByText(title: String, text: String): Rec
-
     @Query("DELETE FROM RECORDS")
     fun deleteAll()
 

@@ -15,6 +15,7 @@ class RecordsProvider {
     private var balances = mutableListOf<Balance>()
 
     private var db:AppDataBase = AppDataBase.getInstance()
+    private val listeners = mutableListOf<()->Unit>()
 
     private var categoriesIds = mutableListOf<String>()
     private var categories = mutableListOf(
@@ -42,8 +43,6 @@ class RecordsProvider {
         balances = db.balancesDao().getAll().toMutableList()
     }
 
-    private val listeners = mutableListOf<()->Unit>()
-
     fun registerListener(listener: ()->Unit){
         listeners.add(listener)
     }
@@ -53,24 +52,27 @@ class RecordsProvider {
     }
 
     fun updateTotalBalance(): Int{
-        var iRet: Int
-        if(db.balancesDao().countBalances() > 0) {
-            // Obtain current records and perform total amount and total qtty operations
-            var auxTotal : Double = 0.0
-            var auxQtty : Int = 0
-            val currentRecs = db.recsDao().getAll()
-            currentRecs.forEach{
-                auxTotal += it.amount
-                auxQtty++
-            }
-
-            // Update total balance record
+        var iRet: Int = App.RET_FALSE
+        val balancesQtty = db.balancesDao().countBalances()
+        if( balancesQtty > 0) {
             val obtainedTotalsReg = db.balancesDao().getTotalBalanceRec()
-            Log.d("Debugger", "Nuevo total: $auxTotal")
-            obtainedTotalsReg.amount = auxTotal
-            obtainedTotalsReg.qtty = auxQtty
-            db.balancesDao().updateTotalBalanceRec(obtainedTotalsReg)
-            iRet = App.RET_TRUE
+            if(obtainedTotalsReg != null) {
+                // Obtain current records and perform total amount and total qtty operations
+                var auxTotal: Double = 0.0
+                var auxQtty: Int = 0
+                val currentRecs = db.recsDao().getAll()
+                currentRecs.forEach {
+                    auxTotal += it.amount
+                    auxQtty++
+                }
+
+                // Update total balance record
+                Log.d("Debugger", "Nuevo total: $auxTotal")
+                obtainedTotalsReg.amount = auxTotal
+                obtainedTotalsReg.qtty = auxQtty
+                db.balancesDao().updateTotalBalanceRec(obtainedTotalsReg)
+                iRet = App.RET_TRUE
+            }
         } else {
             // Totals record doesn't exist
             Log.d("Debugger", "No hay registros en la tabla de balances")
@@ -82,16 +84,16 @@ class RecordsProvider {
     fun updateCategoryBalance(record : Rec): Int{
         var iRet: Int
         if(db.balancesDao().countBalances() > 0) {
-            val obtainedCategBalance = db.balancesDao().getCategoryBalanceRec(record.category.toString())
+            val obtainedCategBalance = db.balancesDao().getBalanceByCategory(record.category.categoryName)
             val amount = record.amount
             // Check existence of category rec and update category total amount
             if(obtainedCategBalance != null){
                 obtainedCategBalance.amount += amount
                 obtainedCategBalance.qtty++
-                db.balancesDao().updateCategoryBalanceRec(obtainedCategBalance.amount, record.category.toString()) // TODO ver si usar converters
+                db.balancesDao().updateCategoryBalanceRec(obtainedCategBalance)
             } else {
                 // Total balances record doesn't exist. Adds it
-                db.balancesDao().insertIntoBalances(Balance(record.category.toString(), 1, record.amount))
+                db.balancesDao().insertIntoBalances(Balance(record.category.categoryName, 1, record.amount))
             }
 
             Log.d("Debugger", "Al total se le suman: $amount")
@@ -110,7 +112,7 @@ class RecordsProvider {
         db.recsDao().insert(record)
         if(db.balancesDao().countBalances() == 0) {
             Log.d("Debugger", "Initialize balances table")
-            db.balancesDao().insertIntoBalances(Balance("totals", 0, 0.0))
+            db.balancesDao().insertIntoBalances(Balance(App.context.getString(R.string.text_db_tag_totals), 0, 0.0))
         }
         updateCategoryBalance(record)
         updateTotalBalance()
