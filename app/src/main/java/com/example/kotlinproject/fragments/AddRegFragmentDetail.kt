@@ -14,6 +14,10 @@ import androidx.navigation.fragment.findNavController
 import com.example.kotlinproject.R
 import com.example.kotlinproject.activities.AddRegActivity
 import com.example.kotlinproject.model.RecordsProvider
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 class AddRegFragmentDetail : Fragment() {
     enum class categoryIds {
@@ -36,11 +40,20 @@ class AddRegFragmentDetail : Fragment() {
 
         val provider = RecordsProvider.getProvider()
 
-        //Spinner
+        // Category spinner
         val categoriesSpinner = rootView.findViewById<Spinner>(R.id.categorySpinner)
-        val spinnerAdapter = ArrayAdapter(requireActivity(), android.R.layout.simple_spinner_item, provider.getCategoriesIdsList())
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line)
-        categoriesSpinner.adapter = spinnerAdapter
+        val categSpinnerAdapter = ArrayAdapter(requireActivity(), android.R.layout.simple_spinner_item, provider.getCategoriesIdsList())
+        categSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line)
+        categoriesSpinner.adapter = categSpinnerAdapter
+
+        // Date spinner
+        val dateSpinner = rootView.findViewById<Spinner>(R.id.dateSpinner)
+        val calendar = Calendar.getInstance()
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val dateString = dateFormat.format(Date(calendar.timeInMillis))
+        val dateSpinnerAdapter = ArrayAdapter(requireActivity(), android.R.layout.simple_spinner_item, listOf(dateString))
+        dateSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line)
+        dateSpinner.adapter = dateSpinnerAdapter
 
         val activityContext = (activity as AddRegActivity)
 
@@ -66,7 +79,7 @@ class AddRegFragmentDetail : Fragment() {
             }
 
             provider.addRecord(activityContext.newRecord)
-            Log.d("Data", activityContext.newRecord.toString())
+            Log.d("Debugger", activityContext.newRecord.toString())
             requireActivity().finish()
         }
         backButton.setOnClickListener {
