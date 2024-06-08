@@ -2,8 +2,10 @@ Doc:
 /** 
 updateTotalBalance():
 Called when HomeStartFragment is resumed or when addRecord is performed. It checks that "totals" record is present in BALANCES table. 
-If that record is present, updates it getting the total amount among the current operations' records. 
-If not, manages an error and returns.
+If that record is present, updates it getting the total amount among the current operations' records.
+To achieve this, this method iterates through the whole records list getting the total amount and the
+transactions qtty.
+If no totals record is present in BALANCES, manages an error and returns.
 **/
 
 Switch:

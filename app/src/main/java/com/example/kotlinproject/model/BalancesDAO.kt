@@ -11,23 +11,20 @@ interface BalancesDAO {
     @Query("SELECT * FROM BALANCES")
     fun getAll(): List<Balance>
 
-    @Query("SELECT * FROM BALANCES where id = :balanceType LIMIT 1")
-    fun getBalanceByBalanceType(balanceType: String): Balance
+    @Query("SELECT * FROM BALANCES where type = :type LIMIT 1")
+    fun getBalanceByType(type: String): Balance
 
-    @Query("SELECT * FROM BALANCES where balance_type LIKE 'totals' LIMIT 1")
+    @Query("SELECT * FROM BALANCES where type LIKE 'Totals' LIMIT 1")
     fun getTotalBalanceRec(): Balance
 
-    @Query("SELECT * FROM BALANCES where balance_type LIKE :categoryName LIMIT 1")
-    fun getCategoryBalanceRec(categoryName: String): Balance
+    @Query("SELECT * FROM BALANCES where type LIKE :categoryName LIMIT 1")
+    fun getBalanceByCategory(categoryName: String): Balance
 
     @Query("SELECT COUNT (*) FROM BALANCES")
     fun countBalances():Int
 
-    @Query("SELECT * FROM BALANCES WHERE id IN (:balancesIds) LIMIT :balancesQtty")
-    fun getBalancesByIds(balancesIds: IntArray, balancesQtty: Int): List<Balance>
-
-    @Query("SELECT * FROM BALANCES WHERE balance_type LIKE :type")
-    fun findByText(type: String): Balance
+    //@Query("SELECT * FROM BALANCES WHERE id IN (:balancesCategs) LIMIT :balancesQtty")
+    //fun getBalancesByIds(balancesCategs: , qtty: Int): List<Balance>
 
     @Query("DELETE FROM BALANCES")
     fun deleteAll()
@@ -38,8 +35,8 @@ interface BalancesDAO {
     @Delete
     fun deleteOnBalances(balance: Balance)
 
-    @Query("UPDATE BALANCES SET amount = :amount WHERE balance_type = :category")
-    fun updateCategoryBalanceRec(amount: Double, category: String)
+    @Update // cambiar la primary key y hacer directamente el update. o ver sino otra forma de actualizarel amojunt y el quantity.
+    fun updateCategoryBalanceRec(balance: Balance)
 
     @Update
     fun updateTotalBalanceRec(balance: Balance)
