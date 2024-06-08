@@ -25,15 +25,6 @@
             android:enabled="true"
             android:exported="true" />
 
-        <receiver
-            android:name=".CryptoValuesReceiver"
-            android:enabled="true"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
-
         <activity
             android:name=".activities.AddRegActivity"
             android:exported="false"
