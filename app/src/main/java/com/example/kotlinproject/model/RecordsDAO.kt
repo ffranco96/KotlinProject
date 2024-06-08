@@ -11,26 +11,23 @@ interface RecordsDAO {
     @Query("SELECT * FROM RECORDS")
     fun getAll(): List<Rec>
 
-    @Query("SELECT * FROM RECORDS where id = :noteId LIMIT 1") // LIMIT 1 para obtener solo primer resultado
-    fun getById(noteId:Int): Rec
+    //@Query("SELECT * FROM RECORDS where id = :recId LIMIT 1") // LIMIT 1 para obtener solo primer resultado
+    //fun getById(recId:Int): Rec
 
-    @Query("SELECT * FROM RECORDS WHERE id IN (:notesIds) LIMIT :notesQty")
-    fun getNotesByIds(notesIds: IntArray, notesQty: Int): List<Rec>
-
-    @Query("SELECT * FROM RECORDS WHERE title LIKE :title AND" +
-            ":text LIKE :text LIMIT 1")
-    fun findByText(title: String, text: String): Rec
+    // TODO se debe arreglar cuando se necesiten obtener varios registros por categoria
+    //@Query("SELECT * FROM RECORDS WHERE id IN (:recsIds) LIMIT :recordsQty")
+    //fun getRecordsByIds(recsIds: IntArray, recordsQty: Int): List<Rec>
 
     @Query("DELETE FROM RECORDS")
     fun deleteAll()
 
     @Insert // Esta anotacion permite que no tengamos que escribir la instruccion INSERT ... INTO ...
     // vararg: cantidad variable de args. 1 o 1,2,3..,4
-    fun insert(vararg note: Rec)
+    fun insert(vararg rec: Rec)
 
     @Delete
-    fun delete(note: Rec)
+    fun delete(rec: Rec)
 
     @Update
-    fun update(note: Rec)
+    fun update(rec: Rec)
 }

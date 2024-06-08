@@ -1,4 +1,5 @@
 <resources>
     <dimen name="title_size">34sp</dimen>
     <dimen name="amount_size">45sp</dimen>
+    <dimen name="textView_heightAmount">50sp</dimen>
 </resources>

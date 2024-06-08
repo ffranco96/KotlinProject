@@ -16,34 +16,29 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.KotlinProject"
         tools:targetApi="31">
+        <activity
+            android:name=".activities.ViewGraphsActivity"
+            android:exported="false" />
+
         <service
             android:name=".services.CryptoValuesService"
             android:enabled="true"
-            android:exported="true"></service>
-
-        <receiver
-            android:name=".CryptoValuesReceiver"
-            android:enabled="true"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
+            android:exported="true" />
 
         <activity
             android:name=".activities.AddRegActivity"
             android:exported="false"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.HomeActivity"
             android:exported="false"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.LoginActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.KotlinProject"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.KotlinProject">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -14,15 +14,19 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.kotlinproject.App
 import com.example.kotlinproject.R
 import com.example.kotlinproject.activities.AddRegActivity
+import com.example.kotlinproject.activities.ViewGraphsActivity
 import com.example.kotlinproject.adapters.RecordsAdapter
-import com.example.kotlinproject.model.Category
 import com.example.kotlinproject.model.RecordsProvider
 import com.example.kotlinproject.services.CryptoValuesService
 
 class HomeStartFragment : Fragment() {
     var textBtcValue: TextView? = null
+    var textFirstCurrencyBalance: TextView? = null
+    var buttonViewGraphs: Button? = null
+
     //@todo en esta screen se puede agregar un selector de moneda que, de paso, active un intent para mostrar su precio
     val receiver = object: BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
@@ -43,6 +47,26 @@ class HomeStartFragment : Fragment() {
         val intentFilter = IntentFilter(CryptoValuesService.ACTION_CRYPTO_VALUES)
         activity?.registerReceiver(receiver, intentFilter)
         super.onResume()
+        val provider = RecordsProvider.getProvider() // TODO podria haber ido en el activity principal
+
+        // Update amount on home screen
+        if(provider.updateTotalBalance() == App.RET_FALSE){
+            textFirstCurrencyBalance?.text = 0.0.toString()
+        } else {
+            val obtainedTotalsReg = provider.getDb().balancesDao().getTotalBalanceRec()
+            textFirstCurrencyBalance?.text = obtainedTotalsReg.amount.toString()
+        }
+
+        // Update state of graphs button
+        if(provider.getDb().balancesDao().countBalances() < 2) {
+            buttonViewGraphs?.isClickable = false
+            buttonViewGraphs?.isEnabled = false
+            buttonViewGraphs?.setBackgroundColor(requireContext().getColor(R.color.sad_grey))
+        } else {
+            buttonViewGraphs?.isClickable = true
+            buttonViewGraphs?.isEnabled = true
+            buttonViewGraphs?.setBackgroundColor(requireContext().getColor(R.color.dark_blue))
+        }
     }
 
     override fun onPause() {
@@ -56,7 +80,10 @@ class HomeStartFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val rootView = inflater.inflate(R.layout.fragment_home_start, container, false)
+        val provider = RecordsProvider.getProvider()
+
         textBtcValue = rootView.findViewById(R.id.textBtcValue)
+        textFirstCurrencyBalance = rootView.findViewById(R.id.textViewFirstCurrencyBalance)
 
         val buttonAddReg = rootView.findViewById<Button>(R.id.addRegButton)
         buttonAddReg.setOnClickListener {
@@ -73,6 +100,11 @@ class HomeStartFragment : Fragment() {
             activity?.startService(intent)
         }
 
+        buttonViewGraphs = rootView.findViewById<Button>(R.id.buttonViewGraphs)
+        buttonViewGraphs?.setOnClickListener {
+            goToViewGraphs()
+        }
+
         // Configurar RecyclerView
         val recyclerRegs = rootView.findViewById<RecyclerView>(R.id.recyclerRegs)
         recyclerRegs.layoutManager = LinearLayoutManager(
@@ -82,15 +114,15 @@ class HomeStartFragment : Fragment() {
         val adapter = RecordsAdapter()
         recyclerRegs.adapter = adapter
 
-        RecordsProvider.getProvider().getRecordsList().forEach {
-            Log.d("Registro",it.toString())
-        }
-
-        RecordsProvider.getProvider().registerListener {
+        provider.registerListener {
             adapter.notifyDataSetChanged()
         }
 
         return rootView
+    }
+    private fun goToViewGraphs() {
+        val intent = Intent(activity, ViewGraphsActivity::class.java)
+        startActivity(intent)
     }
 
     private fun goToAddReg() {
