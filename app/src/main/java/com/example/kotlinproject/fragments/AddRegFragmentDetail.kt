@@ -49,9 +49,23 @@ class AddRegFragmentDetail : Fragment() {
         // Date spinner
         val dateSpinner = rootView.findViewById<Spinner>(R.id.dateSpinner)
         val calendar = Calendar.getInstance()
+        val dateStringList = ArrayList<String>()
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-        val dateString = dateFormat.format(Date(calendar.timeInMillis))
-        val dateSpinnerAdapter = ArrayAdapter(requireActivity(), android.R.layout.simple_spinner_item, listOf(dateString))
+        var dateString = dateFormat.format(Date(calendar.timeInMillis))
+
+        calendar.add(Calendar.DAY_OF_MONTH, -1)
+        dateString = dateFormat.format(Date(calendar.timeInMillis))
+        dateStringList.add(dateString)
+
+        calendar.add(Calendar.DAY_OF_MONTH, 1)
+        dateString = dateFormat.format(Date(calendar.timeInMillis))
+        dateStringList.add(dateString)
+
+        calendar.add(Calendar.DAY_OF_MONTH, 1)
+        dateString = dateFormat.format(Date(calendar.timeInMillis))
+        dateStringList.add(dateString)
+
+        val dateSpinnerAdapter = ArrayAdapter(requireActivity(), android.R.layout.simple_spinner_item, dateStringList)
         dateSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line)
         dateSpinner.adapter = dateSpinnerAdapter
 
@@ -60,7 +74,7 @@ class AddRegFragmentDetail : Fragment() {
         confirmButton.setOnClickListener {
             activityContext.newRecord.title = titleEditText.text.toString()
             activityContext.newRecord.description = descriptionEditText.text.toString()
-            activityContext.newRecord.date = "2024-05-25" //@todo quitar hardcodeo
+            activityContext.newRecord.date = dateSpinner.selectedItem.toString()
             when(categoriesSpinner.selectedItem.toString()){
                 "Comida y alimentos"-> activityContext.newRecord.category = provider.getCategoriesList()[0]
                 "Restaurant y comida rapida"-> activityContext.newRecord.category = provider.getCategoriesList()[1]
