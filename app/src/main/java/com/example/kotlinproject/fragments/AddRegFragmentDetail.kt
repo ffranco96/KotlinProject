@@ -75,7 +75,7 @@ class AddRegFragmentDetail : Fragment() {
             activityContext.newRecord.title = titleEditText.text.toString()
             activityContext.newRecord.description = descriptionEditText.text.toString()
             activityContext.newRecord.date = dateSpinner.selectedItem.toString()
-            when(categoriesSpinner.selectedItem.toString()){
+            when(categoriesSpinner.selectedItem.toString()){// TODO replace by convertToCategory
                 "Comida y alimentos"-> activityContext.newRecord.category = provider.getCategoriesList()[0]
                 "Restaurant y comida rapida"-> activityContext.newRecord.category = provider.getCategoriesList()[1]
                 "Ropa"-> activityContext.newRecord.category = provider.getCategoriesList()[2]

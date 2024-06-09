@@ -21,6 +21,7 @@ import com.example.kotlinproject.activities.AddRegActivity
 import com.example.kotlinproject.activities.ViewGraphsActivity
 import com.example.kotlinproject.adapters.RecordsAdapter
 import com.example.kotlinproject.model.Category
+import com.example.kotlinproject.model.Converters
 import com.example.kotlinproject.model.Rec
 import com.example.kotlinproject.model.RecordsProvider
 import com.example.kotlinproject.services.CryptoValuesService
@@ -108,7 +109,8 @@ class HomeStartFragment : Fragment() {
 
         val buttonSynchronize = rootView.findViewById<Button>(R.id.buttonSynchronize)
         buttonSynchronize.setOnClickListener {
-            readCSVFile()
+            readCSVFile(provider)
+            // TODO loadCSVFile to recycler view
         }
 
         buttonViewGraphs = rootView.findViewById<Button>(R.id.buttonViewGraphs)
@@ -132,7 +134,7 @@ class HomeStartFragment : Fragment() {
         return rootView
     }
 
-    private fun readCSVFile() {
+    private fun readCSVFile(provider: RecordsProvider) {
 
         val bufferReader = BufferedReader(requireActivity().assets.open("records.csv").reader())
         val csvParser = CSVParser.parse(bufferReader, CSVFormat.DEFAULT ) // Note: can use .withIgnoreHeaderCase().withTrim().withRecordSeparator(","))
@@ -143,7 +145,7 @@ class HomeStartFragment : Fragment() {
                     amount = it.get(0).toDouble(),
                     title = it.get(1),
                     description = it.get(2),
-                    //category = it.get(3),//Setearle un Category(esto). Hacer las pruebas y pasar al sigu.
+                    category = provider.convertToCategory(it.get(3)),
                     date = it.get(4),
                     currency = it.get(5),
                 )
@@ -151,8 +153,9 @@ class HomeStartFragment : Fragment() {
             }
         }
         recordsList.forEach{
-            Log.d("Debugger", "${it.amount} and ${it.title} and ${it.description} and ${it.date}" +
-                    "and ${it.currency} and")
+            Log.d("Debugger", "${it.amount}, ${it.title}, ${it.description}, ${it.date}" +
+                    ", ${it.currency}, ${it.category.categoryName}")
+            // TODO add to records provider's list
         }
 
     }

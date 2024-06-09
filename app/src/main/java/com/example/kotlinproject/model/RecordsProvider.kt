@@ -141,4 +141,26 @@ class RecordsProvider {
     fun getDb():AppDataBase{
         return db
     }
+
+    fun convertToCategory(categoryString: String): Category {
+        var retCategory: Category
+        //val provider = RecordsProvider.getProvider() y que hacemos con la doble instancia del provider?
+        when(categoryString.trim()){
+            "Comida y alimentos"-> retCategory = categories[0]
+            "Restaurant y comida rapida"-> retCategory = categories[1]
+            "Ropa"-> retCategory = categories[2]
+            "Vehiculos"-> retCategory = categories[3]
+            "Mantenimiento vehiculos"-> retCategory = categories[4]
+            "Recitales y eventos"-> retCategory = categories[5]
+            "Salud"-> retCategory = categories[6]
+            "Estudios particulares"-> retCategory = categories[7]
+            "Medicamentos e insumos"-> retCategory = categories[8]
+            "Hobbies"-> retCategory = categories[9]
+            "Pintura, dibujo y fotografia"-> retCategory = categories[10]
+            "Inversiones y finanzas"-> retCategory = categories[11]
+            "Salario"-> retCategory = categories[12]
+            else -> retCategory = categories[13]
+        }
+        return retCategory
+    }
 }
