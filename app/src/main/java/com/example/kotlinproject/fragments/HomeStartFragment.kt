@@ -14,13 +14,19 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.room.ColumnInfo
 import com.example.kotlinproject.App
 import com.example.kotlinproject.R
 import com.example.kotlinproject.activities.AddRegActivity
 import com.example.kotlinproject.activities.ViewGraphsActivity
 import com.example.kotlinproject.adapters.RecordsAdapter
+import com.example.kotlinproject.model.Category
+import com.example.kotlinproject.model.Rec
 import com.example.kotlinproject.model.RecordsProvider
 import com.example.kotlinproject.services.CryptoValuesService
+import org.apache.commons.csv.CSVFormat
+import org.apache.commons.csv.CSVParser
+import java.io.BufferedReader
 
 class HomeStartFragment : Fragment() {
     var textBtcValue: TextView? = null
@@ -100,6 +106,11 @@ class HomeStartFragment : Fragment() {
             activity?.startService(intent)
         }
 
+        val buttonSynchronize = rootView.findViewById<Button>(R.id.buttonSynchronize)
+        buttonSynchronize.setOnClickListener {
+            readCSVFile()
+        }
+
         buttonViewGraphs = rootView.findViewById<Button>(R.id.buttonViewGraphs)
         buttonViewGraphs?.setOnClickListener {
             goToViewGraphs()
@@ -109,7 +120,7 @@ class HomeStartFragment : Fragment() {
         val recyclerRegs = rootView.findViewById<RecyclerView>(R.id.recyclerRegs)
         recyclerRegs.layoutManager = LinearLayoutManager(
             activity, LinearLayoutManager.VERTICAL,
-            false
+            true
         )
         val adapter = RecordsAdapter()
         recyclerRegs.adapter = adapter
@@ -120,6 +131,32 @@ class HomeStartFragment : Fragment() {
 
         return rootView
     }
+
+    private fun readCSVFile() {
+
+        val bufferReader = BufferedReader(requireActivity().assets.open("records.csv").reader())
+        val csvParser = CSVParser.parse(bufferReader, CSVFormat.DEFAULT ) // Note: can use .withIgnoreHeaderCase().withTrim().withRecordSeparator(","))
+        val recordsList = mutableListOf<Rec>()
+        csvParser.forEach {
+            it?.let {
+                val newRec = Rec(
+                    amount = it.get(0).toDouble(),
+                    title = it.get(1),
+                    description = it.get(2),
+                    //category = it.get(3),//Setearle un Category(esto). Hacer las pruebas y pasar al sigu.
+                    date = it.get(4),
+                    currency = it.get(5),
+                )
+                recordsList.add(newRec)
+            }
+        }
+        recordsList.forEach{
+            Log.d("Debugger", "${it.amount} and ${it.title} and ${it.description} and ${it.date}" +
+                    "and ${it.currency} and")
+        }
+
+    }
+
     private fun goToViewGraphs() {
         val intent = Intent(activity, ViewGraphsActivity::class.java)
         startActivity(intent)
