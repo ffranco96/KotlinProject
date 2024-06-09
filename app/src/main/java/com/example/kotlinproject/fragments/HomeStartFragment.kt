@@ -20,6 +20,7 @@ import com.example.kotlinproject.R
 import com.example.kotlinproject.activities.AddRegActivity
 import com.example.kotlinproject.activities.ViewGraphsActivity
 import com.example.kotlinproject.adapters.RecordsAdapter
+import com.example.kotlinproject.model.Balance
 import com.example.kotlinproject.model.Category
 import com.example.kotlinproject.model.Converters
 import com.example.kotlinproject.model.Rec
@@ -109,8 +110,30 @@ class HomeStartFragment : Fragment() {
 
         val buttonSynchronize = rootView.findViewById<Button>(R.id.buttonSynchronize)
         buttonSynchronize.setOnClickListener {
-            readCSVFile(provider)
-            // TODO loadCSVFile to recycler view
+            var recordsList = mutableListOf<Rec>()
+            val db = provider?.getDb()
+            recordsList = readCSVFile(provider)
+            recordsList.forEach{
+                provider?.addRecord(it)
+            }
+
+            if(db?.balancesDao()?.countBalances() == 0) {
+                Log.d("Debugger", "Initialize balances table")
+                db.balancesDao().insertIntoBalances(Balance(App.context.getString(R.string.text_db_tag_totals), 0, 0.0))
+            }
+
+            recordsList.forEach{
+                provider?.updateCategoryBalance(it)
+            }
+            provider.updateTotalBalance()
+
+            // Update amount on home screen
+            if(provider.updateTotalBalance() == App.RET_FALSE){
+                textFirstCurrencyBalance?.text = 0.0.toString()
+            } else {
+                val obtainedTotalsReg = provider.getDb().balancesDao().getTotalBalanceRec()
+                textFirstCurrencyBalance?.text = obtainedTotalsReg.amount.toString()
+            }
         }
 
         buttonViewGraphs = rootView.findViewById<Button>(R.id.buttonViewGraphs)
@@ -134,7 +157,7 @@ class HomeStartFragment : Fragment() {
         return rootView
     }
 
-    private fun readCSVFile(provider: RecordsProvider) {
+    private fun readCSVFile(provider: RecordsProvider):MutableList<Rec> {
 
         val bufferReader = BufferedReader(requireActivity().assets.open("records.csv").reader())
         val csvParser = CSVParser.parse(bufferReader, CSVFormat.DEFAULT ) // Note: can use .withIgnoreHeaderCase().withTrim().withRecordSeparator(","))
@@ -152,12 +175,7 @@ class HomeStartFragment : Fragment() {
                 recordsList.add(newRec)
             }
         }
-        recordsList.forEach{
-            Log.d("Debugger", "${it.amount}, ${it.title}, ${it.description}, ${it.date}" +
-                    ", ${it.currency}, ${it.category.categoryName}")
-            // TODO add to records provider's list
-        }
-
+        return recordsList
     }
 
     private fun goToViewGraphs() {

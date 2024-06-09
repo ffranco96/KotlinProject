@@ -109,7 +109,7 @@ class RecordsProvider {
     fun addRecord(record: Rec){
         records.add(record)
         listeners.forEach{ it.invoke()}
-        db.recsDao().insert(record)
+        db.recsDao().insert(record)// TODO no deberia ir despues del bloque de abajo?
         if(db.balancesDao().countBalances() == 0) {
             Log.d("Debugger", "Initialize balances table")
             db.balancesDao().insertIntoBalances(Balance(App.context.getString(R.string.text_db_tag_totals), 0, 0.0))
