@@ -2,4 +2,6 @@
 <resources>
     <color name="dark_blue">#060C80</color>
     <color name="sad_grey">#8D8E9F</color>
+    <color name="positive_green">#05CD10</color>
+    <color name="negative_red">#DA0101</color>
 </resources>

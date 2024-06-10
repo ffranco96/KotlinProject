@@ -62,6 +62,9 @@ dependencies {
     // optional - Paging 3 Integration
     //implementation("androidx.room:room-paging:$room_version")
 
+    // Csv reader
+    implementation 'org.apache.commons:commons-csv:1.5'
+
     implementation 'com.android.volley:volley:1.2.1'
     implementation 'androidx.core:core-ktx:1.8.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'

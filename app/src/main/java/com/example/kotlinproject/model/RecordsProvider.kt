@@ -109,7 +109,7 @@ class RecordsProvider {
     fun addRecord(record: Rec){
         records.add(record)
         listeners.forEach{ it.invoke()}
-        db.recsDao().insert(record)
+        db.recsDao().insert(record)// TODO no deberia ir despues del bloque de abajo?
         if(db.balancesDao().countBalances() == 0) {
             Log.d("Debugger", "Initialize balances table")
             db.balancesDao().insertIntoBalances(Balance(App.context.getString(R.string.text_db_tag_totals), 0, 0.0))
@@ -140,5 +140,27 @@ class RecordsProvider {
 
     fun getDb():AppDataBase{
         return db
+    }
+
+    fun convertToCategory(categoryString: String): Category {
+        var retCategory: Category
+        //val provider = RecordsProvider.getProvider() y que hacemos con la doble instancia del provider?
+        when(categoryString.trim()){
+            "Comida y alimentos"-> retCategory = categories[0]
+            "Restaurant y comida rapida"-> retCategory = categories[1]
+            "Ropa"-> retCategory = categories[2]
+            "Vehiculos"-> retCategory = categories[3]
+            "Mantenimiento vehiculos"-> retCategory = categories[4]
+            "Recitales y eventos"-> retCategory = categories[5]
+            "Salud"-> retCategory = categories[6]
+            "Estudios particulares"-> retCategory = categories[7]
+            "Medicamentos e insumos"-> retCategory = categories[8]
+            "Hobbies"-> retCategory = categories[9]
+            "Pintura, dibujo y fotografia"-> retCategory = categories[10]
+            "Inversiones y finanzas"-> retCategory = categories[11]
+            "Salario"-> retCategory = categories[12]
+            else -> retCategory = categories[13]
+        }
+        return retCategory
     }
 }

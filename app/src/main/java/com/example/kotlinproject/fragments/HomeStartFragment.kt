@@ -14,13 +14,21 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.room.ColumnInfo
 import com.example.kotlinproject.App
 import com.example.kotlinproject.R
 import com.example.kotlinproject.activities.AddRegActivity
 import com.example.kotlinproject.activities.ViewGraphsActivity
 import com.example.kotlinproject.adapters.RecordsAdapter
+import com.example.kotlinproject.model.Balance
+import com.example.kotlinproject.model.Category
+import com.example.kotlinproject.model.Converters
+import com.example.kotlinproject.model.Rec
 import com.example.kotlinproject.model.RecordsProvider
 import com.example.kotlinproject.services.CryptoValuesService
+import org.apache.commons.csv.CSVFormat
+import org.apache.commons.csv.CSVParser
+import java.io.BufferedReader
 
 class HomeStartFragment : Fragment() {
     var textBtcValue: TextView? = null
@@ -100,6 +108,34 @@ class HomeStartFragment : Fragment() {
             activity?.startService(intent)
         }
 
+        val buttonSynchronize = rootView.findViewById<Button>(R.id.buttonSynchronize)
+        buttonSynchronize.setOnClickListener {
+            var recordsList = mutableListOf<Rec>()
+            val db = provider?.getDb()
+            recordsList = readCSVFile(provider)
+            recordsList.forEach{
+                provider?.addRecord(it)
+            }
+
+            if(db?.balancesDao()?.countBalances() == 0) {
+                Log.d("Debugger", "Initialize balances table")
+                db.balancesDao().insertIntoBalances(Balance(App.context.getString(R.string.text_db_tag_totals), 0, 0.0))
+            }
+
+            recordsList.forEach{
+                provider?.updateCategoryBalance(it)
+            }
+            provider.updateTotalBalance()
+
+            // Update amount on home screen
+            if(provider.updateTotalBalance() == App.RET_FALSE){
+                textFirstCurrencyBalance?.text = 0.0.toString()
+            } else {
+                val obtainedTotalsReg = provider.getDb().balancesDao().getTotalBalanceRec()
+                textFirstCurrencyBalance?.text = obtainedTotalsReg.amount.toString()
+            }
+        }
+
         buttonViewGraphs = rootView.findViewById<Button>(R.id.buttonViewGraphs)
         buttonViewGraphs?.setOnClickListener {
             goToViewGraphs()
@@ -109,7 +145,7 @@ class HomeStartFragment : Fragment() {
         val recyclerRegs = rootView.findViewById<RecyclerView>(R.id.recyclerRegs)
         recyclerRegs.layoutManager = LinearLayoutManager(
             activity, LinearLayoutManager.VERTICAL,
-            false
+            true
         )
         val adapter = RecordsAdapter()
         recyclerRegs.adapter = adapter
@@ -120,6 +156,28 @@ class HomeStartFragment : Fragment() {
 
         return rootView
     }
+
+    private fun readCSVFile(provider: RecordsProvider):MutableList<Rec> {
+
+        val bufferReader = BufferedReader(requireActivity().assets.open("records.csv").reader())
+        val csvParser = CSVParser.parse(bufferReader, CSVFormat.DEFAULT ) // Note: can use .withIgnoreHeaderCase().withTrim().withRecordSeparator(","))
+        val recordsList = mutableListOf<Rec>()
+        csvParser.forEach {
+            it?.let {
+                val newRec = Rec(
+                    amount = it.get(0).toDouble(),
+                    title = it.get(1),
+                    description = it.get(2),
+                    category = provider.convertToCategory(it.get(3)),
+                    date = it.get(4),
+                    currency = it.get(5),
+                )
+                recordsList.add(newRec)
+            }
+        }
+        return recordsList
+    }
+
     private fun goToViewGraphs() {
         val intent = Intent(activity, ViewGraphsActivity::class.java)
         startActivity(intent)
