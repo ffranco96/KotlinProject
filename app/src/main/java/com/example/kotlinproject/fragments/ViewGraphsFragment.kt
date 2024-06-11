@@ -13,6 +13,7 @@ import com.example.kotlinproject.R
 import com.example.kotlinproject.model.Balance
 import com.example.kotlinproject.model.RecordsProvider
 import com.github.mikephil.charting.charts.BarChart
+import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
@@ -54,12 +55,25 @@ class ViewGraphsFragment : Fragment() {
                 var i = 2f
                 balancesByCategory.forEach{
                     barArrayList.add(BarEntry(i,it.qtty.toFloat()))
-                    //barArrayList.add(BarEntry(i,30f))
                     i++
                 }
             }
         }
         return
+    }
+
+    private fun obtainDataSetColors(provider : RecordsProvider):MutableList<Int>{
+        if(provider == null)
+            return (ColorTemplate.COLORFUL_COLORS).toMutableList()
+        val dataSetColors = mutableListOf<Int>()
+
+        for(category in provider.getCategoriesList()){
+            dataSetColors.add(category.colorIcon)
+        }
+        if(dataSetColors.size < 1)
+            return (ColorTemplate.COLORFUL_COLORS).toMutableList()
+        else
+            return dataSetColors
     }
 
     private fun getData(){
@@ -83,17 +97,22 @@ class ViewGraphsFragment : Fragment() {
 
         val barChart = rootView.findViewById<BarChart>(R.id.barchart)
         updateBalancesBarChart(provider)
-        val barDataSet = BarDataSet(barArrayList, "Estadisticas")
+        val barDataSet = BarDataSet(barArrayList, "Registros")
         val barData = BarData(barDataSet)
         barChart.data = barData
-        // Color bar data set
-        barDataSet.colors = (ColorTemplate.COLORFUL_COLORS).toMutableList()
-        // Text color
-        barDataSet.valueTextColor = Color.BLACK
-        // Text size
-        barDataSet.valueTextSize = 16f
-        barChart.description.isEnabled = true
 
+        // Color bar data set
+        //barDataSet.colors = obtainDataSetColors(provider)
+        barDataSet.colors = (ColorTemplate.COLORFUL_COLORS).toMutableList() // TODO set corresponding color to each bar
+
+
+        // Text format
+        barDataSet.valueTextColor = Color.BLACK
+        barDataSet.valueTextSize = 25f
+        barChart.description.isEnabled = true
+        barChart.description.textSize = 35f
+        barChart.description.text = "Totales"
+        barChart.description.setPosition(10f,10f)
 
         return rootView
     }
