@@ -9,24 +9,6 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-    <TextView
-        android:id="@+id/numericValue3"
-        android:layout_width="146dp"
-        android:layout_height="72dp"
-        android:layout_marginStart="76dp"
-        android:layout_marginTop="56dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/numericValue2" />
-
-    <TextView
-        android:id="@+id/numericValue2"
-        android:layout_width="146dp"
-        android:layout_height="72dp"
-        android:layout_marginStart="76dp"
-        android:layout_marginTop="40dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/numericValue1" />
-
     <ImageButton
         android:id="@+id/cancelButton2"
         android:layout_width="61dp"
@@ -38,12 +20,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/numericValue1"
-        android:layout_width="146dp"
-        android:layout_height="72dp"
-        android:layout_marginStart="76dp"
-        android:layout_marginTop="152dp"
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/barchart"
+        android:layout_width="367dp"
+        android:layout_height="635dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="88dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
