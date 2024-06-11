@@ -1,16 +1,35 @@
-Doc:
-/** 
-updateTotalBalance():
-Called when HomeStartFragment is resumed or when addRecord is performed. It checks that "totals" record is present in BALANCES table. 
-If that record is present, updates it getting the total amount among the current operations' records.
-To achieve this, this method iterates through the whole records list getting the total amount and the
-transactions qtty.
-If no totals record is present in BALANCES, manages an error and returns.
-**/
+# Wallet de administración de ingresos
+## V1.0.0
+-----------------------------
+El proyecto consiste en una aplicación de administración de finanzas personales, la cual le permitirá al usuario organizar sus ingresos y gastos. 
 
-Switch:
-Added switch. Now amount depends on switch: left (off) is an expense. Rigth (on) is an income.
+## **Características**:
+* Posibilidad de clasificar ingresos y gastos para llevar un orden y un conteo de transacciones por categoría.
+* Balance de totales que le permitirá al usuario llevar un total de sus gastos e ingresos.
+* Gráficos para acompañar los balances totales, para dar información visual y permitir un eficiente análisis de datos.
+* Categorías que se adaptan al día a día de una persona física promedio.
+* Feature para importar transacciones a través de un archivo .csv .
 
-Graphs:
-At least one category must be operated to add at least 1 category record in BALANCES TABLE.
-This must happen to enable Graphs View button on home screen. Otherwise, button must be grey.
+## **Próximas versiones**
+* Posibilidad de añadir categorías personalizadas.
+* Posibilidad de agregar un .csv personalizado.
+* Feature para exportar transacciones a un nuevo archivo .csv .
+* Conversión de monedas: de ARS a dolar MEP, dolar BLUE y dolar CCL.
+* Visor de valores de criptoactivos ent iempo real.
+* Cálculo de PyG (Pérdidas y ganancias).
+
+### Instrucciones de uso:
+
+### Switch:
+Se agregó un switch para setear la transacción como un ingreso o un gasto.
+El monto dependerá de ese switch para ser negativo en caso de un gasto (switch hacia la izquierda)
+o ser positivo en caso de un ingreso (switch hacia la derecha).
+
+### Database:
+Las transacciones se contabilizarán en dos tablas: Records y Balances. 
+La primera contendrá todas las transacciones de todas las categorías.
+La segunda, poseerá un registro por cada categoría con el monto total y la cantidad de 
+transacciones para esa categoría.
+
+### Gráficos
+El botón de gráficos sólo dejará de estar grisado en cuanto se agregue el primer registro.
