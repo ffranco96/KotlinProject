@@ -134,6 +134,17 @@ class HomeStartFragment : Fragment() {
                 val obtainedTotalsReg = provider.getDb().balancesDao().getTotalBalanceRec()
                 textFirstCurrencyBalance?.text = obtainedTotalsReg.amount.toString()
             }
+
+            // Update state of graphs button
+            if(provider.getDb().balancesDao().countBalances() < 2) {
+                buttonViewGraphs?.isClickable = false
+                buttonViewGraphs?.isEnabled = false
+                buttonViewGraphs?.setBackgroundColor(requireContext().getColor(R.color.sad_grey))
+            } else {
+                buttonViewGraphs?.isClickable = true
+                buttonViewGraphs?.isEnabled = true
+                buttonViewGraphs?.setBackgroundColor(requireContext().getColor(R.color.dark_blue))
+            }
         }
 
         buttonViewGraphs = rootView.findViewById<Button>(R.id.buttonViewGraphs)
