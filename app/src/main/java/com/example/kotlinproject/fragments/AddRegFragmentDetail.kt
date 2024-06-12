@@ -72,13 +72,16 @@ class AddRegFragmentDetail : Fragment() {
         val activityContext = (activity as AddRegActivity)
 
         confirmButton.setOnClickListener {
-            activityContext.newRecord.title = titleEditText.text.toString()
-            activityContext.newRecord.description = descriptionEditText.text.toString()
-            activityContext.newRecord.date = dateSpinner.selectedItem.toString()
-            activityContext.newRecord.category = provider.convertToCategory(categoriesSpinner.selectedItem.toString())
+            if(activityContext.newRecord.amount != 0.0) {
+                activityContext.newRecord.title = titleEditText.text.toString()
+                activityContext.newRecord.description = descriptionEditText.text.toString()
+                activityContext.newRecord.date = dateSpinner.selectedItem.toString()
+                activityContext.newRecord.category =
+                    provider.convertToCategory(categoriesSpinner.selectedItem.toString())
 
-            provider.addRecord(activityContext.newRecord)
-            Log.d("Debugger", activityContext.newRecord.toString())
+                provider.addRecord(activityContext.newRecord)
+                Log.d("Debugger", activityContext.newRecord.toString())
+            }
             requireActivity().finish()
         }
         backButton.setOnClickListener {

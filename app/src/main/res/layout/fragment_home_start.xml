@@ -38,16 +38,18 @@
         android:layout_width="403dp"
         android:layout_height="431dp"
         android:layout_marginTop="52dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/textViewFirstCurrencyBalance"
         android:layout_width="177dp"
         android:layout_height="49dp"
         android:layout_marginTop="27dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginEnd="68dp"
         android:text="0.0"
         android:textAlignment="textEnd"
         android:textSize="@dimen/amount_size"
@@ -123,8 +125,8 @@
         android:id="@+id/textView2"
         android:layout_width="217dp"
         android:layout_height="36dp"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="4dp"
         android:text="Resumen de últimos registros"
         android:textSize="14sp"
         android:textStyle="bold"
