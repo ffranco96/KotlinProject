@@ -7,12 +7,26 @@
     android:layout_height="match_parent"
     tools:context=".fragments.AddRegFragmentDetail">
 
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="140dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/roboto_medium"
+        android:text="Detalle"
+        android:textColor="@color/ui_blue"
+        android:textSize="@dimen/title_size"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageButton
         android:id="@+id/confirmButton"
         android:layout_width="61dp"
         android:layout_height="51dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
+        android:backgroundTint="@color/ui_light_blue"
         android:contentDescription="Cancel new register adding"
         android:src="@drawable/ic_confirm"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,6 +38,7 @@
         android:layout_height="51dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:backgroundTint="@color/ui_light_blue"
         android:contentDescription="Cancel new register adding"
         android:src="@drawable/ic_back"
         app:layout_constraintStart_toStartOf="parent"
@@ -45,7 +60,8 @@
             android:layout_height="44dp"
             android:fontFamily="@font/roboto_medium"
             android:text="Título"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/titleEditText"
@@ -62,7 +78,8 @@
             android:layout_height="55dp"
             android:fontFamily="@font/roboto_medium"
             android:text="Descripción"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/descriptionEditText"
@@ -80,7 +97,8 @@
             android:layout_height="41dp"
             android:fontFamily="@font/roboto_medium"
             android:text="Categoría"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <Spinner
             android:id="@+id/categorySpinner"

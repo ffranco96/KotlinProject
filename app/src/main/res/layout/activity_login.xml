@@ -15,7 +15,7 @@
         android:fontFamily="@font/roboto_medium"
         android:text="Iniciar sesion"
         android:textAlignment="center"
-        android:textColor="#000000"
+        android:textColor="@color/ui_blue"
         android:textSize="@dimen/title_size"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -71,7 +71,7 @@
             android:id="@+id/loginButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/dark_blue"
+            android:backgroundTint="@color/ui_blue"
             android:fontFamily="@font/roboto_medium"
             android:text="Iniciar sesion"
             android:textColorHighlight="#BCC2E6"

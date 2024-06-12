@@ -15,6 +15,7 @@
         android:layout_height="51dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:backgroundTint="@color/ui_light_blue"
         android:contentDescription="Cancel new register adding"
         android:src="@drawable/ic_cancel"
         app:layout_constraintStart_toStartOf="parent"

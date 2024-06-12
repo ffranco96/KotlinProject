@@ -14,7 +14,6 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.room.ColumnInfo
 import com.example.kotlinproject.App
 import com.example.kotlinproject.R
 import com.example.kotlinproject.activities.AddRegActivity
@@ -73,7 +72,7 @@ class HomeStartFragment : Fragment() {
         } else {
             buttonViewGraphs?.isClickable = true
             buttonViewGraphs?.isEnabled = true
-            buttonViewGraphs?.setBackgroundColor(requireContext().getColor(R.color.dark_blue))
+            buttonViewGraphs?.setBackgroundColor(requireContext().getColor(R.color.ui_blue))
         }
     }
 
@@ -101,7 +100,6 @@ class HomeStartFragment : Fragment() {
         val buttonUpdValues = rootView.findViewById<Button>(R.id.buttonUpdValues)
         buttonUpdValues.setOnClickListener {
             textBtcValue?.text = "\uD83D\uDD52"
-            Log.d("BTC_Value","Paso por aca")
 
             // Comienza un servicio
             val intent = Intent(activity, CryptoValuesService::class.java)
@@ -143,7 +141,7 @@ class HomeStartFragment : Fragment() {
             } else {
                 buttonViewGraphs?.isClickable = true
                 buttonViewGraphs?.isEnabled = true
-                buttonViewGraphs?.setBackgroundColor(requireContext().getColor(R.color.dark_blue))
+                buttonViewGraphs?.setBackgroundColor(requireContext().getColor(R.color.ui_blue))
             }
         }
 
