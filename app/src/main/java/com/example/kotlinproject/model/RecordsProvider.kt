@@ -40,6 +40,7 @@ class RecordsProvider {
             categoriesIds.add(category.categoryName)
         }
         records = db.recsDao().getAll().toMutableList()
+        records.sort()
         balances = db.balancesDao().getAll().toMutableList()
     }
 
@@ -119,6 +120,7 @@ class RecordsProvider {
     // Every time notes are added, also listeners are executed
     fun addRecord(record: Rec){
         records.add(record)
+        records.sort()
         listeners.forEach{ it.invoke()}
         db.recsDao().insert(record)// TODO no deberia ir despues del bloque de abajo?
         if(db.balancesDao().countBalances() == 0) {
