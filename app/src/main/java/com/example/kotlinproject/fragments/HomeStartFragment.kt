@@ -120,9 +120,6 @@ class HomeStartFragment : Fragment() {
                 db.balancesDao().insertIntoBalances(Balance(App.context.getString(R.string.text_db_tag_totals), 0, 0.0))
             }
 
-            recordsList.forEach{
-                provider?.updateCategoryBalance(it)
-            }
             provider.updateTotalBalance()
 
             // Update amount on home screen
@@ -150,7 +147,7 @@ class HomeStartFragment : Fragment() {
             goToViewGraphs()
         }
 
-        // Configurar RecyclerView
+        // Configure RecyclerView
         val recyclerRegs = rootView.findViewById<RecyclerView>(R.id.recyclerRegs)
         recyclerRegs.layoutManager = LinearLayoutManager(
             activity, LinearLayoutManager.VERTICAL,
