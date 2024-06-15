@@ -131,6 +131,14 @@ class RecordsProvider {
         updateTotalBalance()
     }
 
+    fun deleteAllRecords(){
+        records.clear()
+        listeners.forEach{ it.invoke()}
+        db.recsDao().deleteAll()
+        db.recsDao().deleteAll()
+        db?.balancesDao()?.insertIntoBalances(Balance(App.context.getString(R.string.text_db_tag_totals), 0, 0.0))
+    }
+
     fun getRecordsList():MutableList<Rec>{
         return records
     }

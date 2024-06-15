@@ -8,6 +8,19 @@
     tools:context=".fragments.HomeStartFragment" >
 
     <Button
+        android:id="@+id/buttonDeleteAll"
+        android:layout_width="52dp"
+        android:layout_height="51dp"
+        android:layout_marginTop="232dp"
+        android:layout_marginEnd="16dp"
+        android:backgroundTint="@color/ui_blue"
+        android:drawableBottom="@android:drawable/ic_menu_delete"
+        android:hint="Borrar todo"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
         android:id="@+id/buttonSynchronize"
         android:layout_width="77dp"
         android:layout_height="69dp"
@@ -73,13 +86,13 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="336dp"
-        android:layout_height="64dp"
-        android:layout_marginTop="164dp"
+        android:layout_width="103dp"
+        android:layout_height="53dp"
+        android:layout_marginTop="168dp"
+        android:layout_marginEnd="40dp"
         android:orientation="horizontal"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.373"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
@@ -141,12 +154,12 @@
         android:id="@+id/buttonViewGraphs"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="228dp"
-        android:layout_marginEnd="44dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="168dp"
         android:backgroundTint="@color/ui_blue"
         android:text="Graficos"
         android:textColor="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

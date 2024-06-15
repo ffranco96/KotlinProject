@@ -97,11 +97,12 @@ class HomeStartFragment : Fragment() {
             goToAddReg()
         }
 
+        // Button to update BTC/USDT value
         val buttonUpdValues = rootView.findViewById<Button>(R.id.buttonUpdValues)
         buttonUpdValues.setOnClickListener {
             textBtcValue?.text = "\uD83D\uDD52"
 
-            // Comienza un servicio
+            // Starts a service
             val intent = Intent(activity, CryptoValuesService::class.java)
             activity?.startService(intent)
         }
@@ -122,7 +123,7 @@ class HomeStartFragment : Fragment() {
 
             provider.updateTotalBalance()
 
-            // Update amount on home screen
+            // Updates amount on home screen
             if(provider.updateTotalBalance() == App.RET_FALSE){
                 textFirstCurrencyBalance?.text = 0.0.toString()
             } else {
@@ -145,6 +146,11 @@ class HomeStartFragment : Fragment() {
         buttonViewGraphs = rootView.findViewById<Button>(R.id.buttonViewGraphs)
         buttonViewGraphs?.setOnClickListener {
             goToViewGraphs()
+        }
+
+        val buttonDeleteAll = rootView.findViewById<Button>(R.id.buttonDeleteAll)
+        buttonDeleteAll.setOnClickListener {
+            provider.deleteAllRecords()
         }
 
         // Configure RecyclerView
