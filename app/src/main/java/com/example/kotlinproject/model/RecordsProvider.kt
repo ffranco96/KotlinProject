@@ -135,7 +135,7 @@ class RecordsProvider {
         records.clear()
         listeners.forEach{ it.invoke()}
         db.recsDao().deleteAll()
-        db.recsDao().deleteAll()
+        db.balancesDao().deleteAll()
         db?.balancesDao()?.insertIntoBalances(Balance(App.context.getString(R.string.text_db_tag_totals), 0, 0.0))
     }
 

@@ -81,6 +81,19 @@ class HomeStartFragment : Fragment() {
         super.onPause()
     }
 
+    private fun updateGraphsButtonColor(provider:RecordsProvider){
+        // Update state of graphs button
+        if(provider.getDb().balancesDao().countBalances() < 2) {
+            buttonViewGraphs?.isClickable = false
+            buttonViewGraphs?.isEnabled = false
+            buttonViewGraphs?.setBackgroundColor(requireContext().getColor(R.color.sad_grey))
+        } else {
+            buttonViewGraphs?.isClickable = true
+            buttonViewGraphs?.isEnabled = true
+            buttonViewGraphs?.setBackgroundColor(requireContext().getColor(R.color.ui_blue))
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -132,15 +145,7 @@ class HomeStartFragment : Fragment() {
             }
 
             // Update state of graphs button
-            if(provider.getDb().balancesDao().countBalances() < 2) {
-                buttonViewGraphs?.isClickable = false
-                buttonViewGraphs?.isEnabled = false
-                buttonViewGraphs?.setBackgroundColor(requireContext().getColor(R.color.sad_grey))
-            } else {
-                buttonViewGraphs?.isClickable = true
-                buttonViewGraphs?.isEnabled = true
-                buttonViewGraphs?.setBackgroundColor(requireContext().getColor(R.color.ui_blue))
-            }
+            updateGraphsButtonColor(provider)
         }
 
         buttonViewGraphs = rootView.findViewById<Button>(R.id.buttonViewGraphs)
@@ -151,6 +156,7 @@ class HomeStartFragment : Fragment() {
         val buttonDeleteAll = rootView.findViewById<Button>(R.id.buttonDeleteAll)
         buttonDeleteAll.setOnClickListener {
             provider.deleteAllRecords()
+            updateGraphsButtonColor(provider)
         }
 
         // Configure RecyclerView
