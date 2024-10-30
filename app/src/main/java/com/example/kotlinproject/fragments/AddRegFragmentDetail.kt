@@ -1,5 +1,6 @@
 package com.example.kotlinproject.fragments
 
+import android.app.DatePickerDialog
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -10,6 +11,7 @@ import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Spinner
+import android.widget.TextView
 import androidx.navigation.fragment.findNavController
 import com.example.kotlinproject.R
 import com.example.kotlinproject.activities.AddRegActivity
@@ -47,13 +49,36 @@ class AddRegFragmentDetail : Fragment() {
         categoriesSpinner.adapter = categSpinnerAdapter
 
         // Date spinner
-        val dateSpinner = rootView.findViewById<Spinner>(R.id.dateSpinner)
         val calendar = Calendar.getInstance()
-        val dateStringList = ArrayList<String>()
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-        var dateString = dateFormat.format(Date(calendar.timeInMillis))
+        val dateSelector = rootView.findViewById<TextView>(R.id.datePicker)
+        dateSelector.text = dateFormat.format(calendar.time)
 
-        calendar.add(Calendar.DAY_OF_MONTH, -1)
+        var selectedYear = calendar.get(Calendar.YEAR)
+        var selectedMonth = calendar.get(Calendar.MONTH)
+        var selectedDayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
+
+        dateSelector.setOnClickListener {
+            val datePickerDialog = DatePickerDialog(
+                requireContext(),
+                { _, year, month, dayOfMonth ->
+                    selectedYear = year
+                    selectedMonth = month
+                    selectedDayOfMonth = dayOfMonth
+
+                    var selectedCalendar = Calendar.getInstance()
+                    selectedCalendar.set(selectedYear, selectedMonth, selectedDayOfMonth)
+                    dateSelector.text = dateFormat.format(selectedCalendar.time)
+                },
+                selectedYear,
+                selectedMonth,
+                selectedDayOfMonth
+            )
+
+            datePickerDialog.show()
+        }
+
+        /*calendar.add(Calendar.DAY_OF_MONTH, -1)
         dateString = dateFormat.format(Date(calendar.timeInMillis))
         dateStringList.add(dateString)
 
@@ -63,11 +88,11 @@ class AddRegFragmentDetail : Fragment() {
 
         calendar.add(Calendar.DAY_OF_MONTH, 1)
         dateString = dateFormat.format(Date(calendar.timeInMillis))
-        dateStringList.add(dateString)
+        dateStringList.add(dateString)*/
 
-        val dateSpinnerAdapter = ArrayAdapter(requireActivity(), android.R.layout.simple_spinner_item, dateStringList)
+        /*val dateSpinnerAdapter = ArrayAdapter(requireActivity(), android.R.layout.simple_spinner_item, dateStringList)
         dateSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line)
-        dateSpinner.adapter = dateSpinnerAdapter
+        dateSpinner.adapter = dateSpinnerAdapter*/
 
         val activityContext = (activity as AddRegActivity)
 
@@ -75,7 +100,7 @@ class AddRegFragmentDetail : Fragment() {
             if(activityContext.newRecord.amount != 0.0) {
                 activityContext.newRecord.title = titleEditText.text.toString()
                 activityContext.newRecord.description = descriptionEditText.text.toString()
-                activityContext.newRecord.date = dateSpinner.selectedItem.toString()
+                activityContext.newRecord.date = dateSelector.text.toString()
                 activityContext.newRecord.category =
                     provider.convertToCategory(categoriesSpinner.selectedItem.toString())
 

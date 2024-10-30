@@ -113,10 +113,12 @@
             android:text="Fecha"
             android:textSize="20sp" />
 
-        <Spinner
-            android:id="@+id/dateSpinner"
+        <TextView
+            android:id="@+id/datePicker"
             android:layout_width="match_parent"
-            android:layout_height="54dp" />
+            android:layout_height="45dp"
+            android:hint="Seleccionar fecha"
+            android:textSize="18sp" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
