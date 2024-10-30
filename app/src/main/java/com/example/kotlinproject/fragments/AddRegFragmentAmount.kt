@@ -2,6 +2,8 @@ package com.example.kotlinproject.fragments
 
 import android.content.IntentFilter
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -16,6 +18,8 @@ import androidx.navigation.fragment.findNavController
 import com.example.kotlinproject.R
 import com.example.kotlinproject.activities.AddRegActivity
 import com.example.kotlinproject.services.CryptoValuesService
+import java.text.NumberFormat
+import java.util.Locale
 
 class AddRegFragmentAmount : Fragment() {
     override fun onCreateView(
@@ -41,12 +45,15 @@ class AddRegFragmentAmount : Fragment() {
         val activityContext = (activity as AddRegActivity)
         nextButton.setOnClickListener{
             val amountText = amountEditText.text
+            val cleanAmountText = amountText.toString().replace("[,.]".toRegex(), "")
+            val amount = cleanAmountText.toDoubleOrNull() ?: 0.0
             if(amountText.isEmpty()){
                 activityContext.newRecord.amount = 0.0
             } else {
+                // Switch to select income or expense
                 activityContext.newRecord.amount = if(!(incomeExpensesSwitch.isChecked))
-                                                    amountEditText.text.toString().toDouble() * (-1)
-                                                    else amountEditText.text.toString().toDouble()
+                                                    amount * (-1)
+                                                    else amount
             }
 
 
@@ -58,6 +65,37 @@ class AddRegFragmentAmount : Fragment() {
         cancelButton.setOnClickListener {
             requireActivity().finish()
         }
+
+        amountEditText.addTextChangedListener(object : TextWatcher {
+            private var current = ""
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+            override fun afterTextChanged(s: Editable?) {
+                if (s.toString() != current) {
+                    amountEditText.removeTextChangedListener(this)
+
+                    // Cleans value of any other dots or commas
+                    val cleanString = s.toString().replace("""[,.]""".toRegex(), "")
+
+                    // Converts to double and applies currency format
+                    val parsed = cleanString.toDoubleOrNull() ?: 0.0
+                    val formatted = NumberFormat.getNumberInstance(Locale.US).apply {
+                        minimumFractionDigits = 2
+                        maximumFractionDigits = 2
+                    }.format(parsed / 100) // Divide entre 100 para manejar los decimales
+
+                    // Updates text and cursor
+                    current = formatted
+                    amountEditText.setText(formatted)
+                    amountEditText.setSelection(formatted.length)
+
+                    amountEditText.addTextChangedListener(this)
+                }
+            }
+        })
 
         return rootView
     }
