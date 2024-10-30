@@ -155,6 +155,14 @@ class HomeStartFragment : Fragment() {
         val buttonDeleteAll = rootView.findViewById<Button>(R.id.buttonDeleteAll)
         buttonDeleteAll.setOnClickListener {
             provider.deleteAllRecords()
+            // Update amount on home screen
+            if(provider.updateTotalBalance() == App.RET_FALSE){
+                textFirstCurrencyBalance?.text = 0.0.toString()
+            } else {
+                val obtainedTotalsReg = provider.getDb().balancesDao().getTotalBalanceRec()
+                textFirstCurrencyBalance?.text = obtainedTotalsReg.amount.toString()
+            }
+            // Update state of graphs button
             updateGraphsButtonColor(provider)
         }
 
