@@ -50,7 +50,9 @@ class AddRegFragmentDetail : Fragment() {
 
         // Date spinner
         val calendar = Calendar.getInstance()
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val locale = Locale("es", "ES")
+        Locale.setDefault(locale)
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", locale)
         val dateSelector = rootView.findViewById<TextView>(R.id.datePicker)
         dateSelector.text = dateFormat.format(calendar.time)
 
