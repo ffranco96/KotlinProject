@@ -34,11 +34,10 @@ class HomeStartFragment : Fragment() {
     var textFirstCurrencyBalance: TextView? = null
     var buttonViewGraphs: Button? = null
 
-    //@todo en esta screen se puede agregar un selector de moneda que, de paso, active un intent para mostrar su precio
     val receiver = object: BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             Log.d("BTC_Value","Onreceive started")
-            val btcValue = intent?.getDoubleExtra(CryptoValuesService.EXTRA_CRYPTO_VALUES, -200.0) ?: -300.0 // @todo modify and replace for btc
+            val btcValue = intent?.getDoubleExtra(CryptoValuesService.EXTRA_CRYPTO_VALUES, -200.0) ?: -300.0
             Log.d("BTC_Value", "Valor recibido $btcValue")
             //Toast.makeText(context, "Llego valor btc: $btcValue",Toast.LENGTH_LONG).show()
             if (btcValue < 0) {
@@ -54,7 +53,7 @@ class HomeStartFragment : Fragment() {
         val intentFilter = IntentFilter(CryptoValuesService.ACTION_CRYPTO_VALUES)
         activity?.registerReceiver(receiver, intentFilter)
         super.onResume()
-        val provider = RecordsProvider.getProvider() // TODO podria haber ido en el activity principal
+        val provider = RecordsProvider.getProvider()
 
         // Update amount on home screen
         if(provider.updateTotalBalance() == App.RET_FALSE){
@@ -102,7 +101,7 @@ class HomeStartFragment : Fragment() {
         val rootView = inflater.inflate(R.layout.fragment_home_start, container, false)
         val provider = RecordsProvider.getProvider()
 
-        textBtcValue = rootView.findViewById(R.id.textBtcValue)
+        //textBtcValue = rootView.findViewById(R.id.textBtcValue)
         textFirstCurrencyBalance = rootView.findViewById(R.id.textViewFirstCurrencyBalance)
 
         val buttonAddReg = rootView.findViewById<Button>(R.id.addRegButton)
@@ -111,14 +110,14 @@ class HomeStartFragment : Fragment() {
         }
 
         // Button to update BTC/USDT value
-        val buttonUpdValues = rootView.findViewById<Button>(R.id.buttonUpdValues)
+        /*val buttonUpdValues = rootView.findViewById<Button>(R.id.buttonUpdValues)
         buttonUpdValues.setOnClickListener {
             textBtcValue?.text = "\uD83D\uDD52"
 
             // Starts a service
             val intent = Intent(activity, CryptoValuesService::class.java)
             activity?.startService(intent)
-        }
+        }*/
 
         val buttonSynchronize = rootView.findViewById<Button>(R.id.buttonSynchronize)
         buttonSynchronize.setOnClickListener {

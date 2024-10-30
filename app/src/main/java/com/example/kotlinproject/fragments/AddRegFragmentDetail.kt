@@ -22,7 +22,7 @@ import java.util.Locale
 class AddRegFragmentDetail : Fragment() {
     enum class categoryIds {
         EVENTS_AND_CONCERTS,
-        OTHER, //@todo agregar resto de categorias almenos por ahora. Agregarle un id String a la categoria. Agregar un spinner
+        OTHER,
     }
 
     override fun onCreateView(

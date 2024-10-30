@@ -26,7 +26,7 @@ class AddRegFragmentAmount : Fragment() {
         val rootView = inflater.inflate(R.layout.fragment_add_reg_amount, container, false)
 
         // Spinner
-        val currencies = listOf("ARS") // TODO "USD", "USDT", "BTC" . Por el momento solo ARS
+        val currencies = listOf("ARS")
         val currencySpinner = rootView.findViewById<Spinner>(R.id.currencySpinner)
         val spinnerAdapter = ArrayAdapter(requireActivity(), android.R.layout.simple_spinner_item,currencies)
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line)
@@ -39,7 +39,7 @@ class AddRegFragmentAmount : Fragment() {
         val incomeExpensesSwitch = rootView.findViewById<Switch>(R.id.incomeExpensesSwitch)
 
         val activityContext = (activity as AddRegActivity)
-        nextButton.setOnClickListener{//@todo check
+        nextButton.setOnClickListener{
             val amountText = amountEditText.text
             if(amountText.isEmpty()){
                 activityContext.newRecord.amount = 0.0
